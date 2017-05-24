@@ -18,37 +18,15 @@ public class TagsPanel extends Panel implements View{
 	public static final String NAME = "TAGS";
 	
 	private HorizontalSplitPanel mainSplit;
+	private VerticalLayout leftLayout;
 	
 	public TagsPanel() {
 		super("Tags");
 		
 		mainSplit = new HorizontalSplitPanel();
-		
-		Tree tags = new Tree();
-		//TODO
-		tags.addItem("TAG PRUEBA");
-		tags.addItem("TAG PRUEBA 2ASDASDASDASDASDASDASDASD");
-		tags.setParent("TAG PRUEBA 2ASDASDASDASDASDASDASDASD", "TAG PRUEBA");
-		tags.setChildrenAllowed("TAG PRUEBA 2ASDASDASDASDASDASDASDASD", false);
-		//tags.setSizeFull();
+		leftLayout = new VerticalLayout();
 
-		Panel treePanel = new Panel();
-		
-		treePanel.setContent(tags);
-		treePanel.setSizeFull();
-		treePanel.setStyleName(ValoTheme.PANEL_BORDERLESS);
-		
-		Button agregaTagBtt = new Button("Agregar");
-		agregaTagBtt.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
-		agregaTagBtt.setWidth(100, Unit.PERCENTAGE);
-		
-		VerticalLayout leftLayout = new VerticalLayout();
-		leftLayout.addComponent(treePanel);
-		leftLayout.addComponent(agregaTagBtt);
-		leftLayout.setComponentAlignment(agregaTagBtt, Alignment.MIDDLE_CENTER);
-
-		leftLayout.setSizeFull();
-		leftLayout.setExpandRatio(treePanel, 9);
+		initLeft();
 		
 		Panel editPanel = new Panel();
 		
@@ -64,6 +42,23 @@ public class TagsPanel extends Panel implements View{
 		this.setSizeFull();
 		this.setContent(mainSplit);
 		
+		
+	}
+	
+	private void initLeft(){
+		
+		TagsTree treePanel = new TagsTree();
+		
+		Button agregaTagBtt = new Button("Agregar");
+		agregaTagBtt.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		agregaTagBtt.setWidth(100, Unit.PERCENTAGE);
+		
+		leftLayout.addComponent(agregaTagBtt);
+		leftLayout.addComponent(treePanel);
+		leftLayout.setComponentAlignment(agregaTagBtt, Alignment.MIDDLE_CENTER);
+
+		leftLayout.setSizeFull();
+		leftLayout.setExpandRatio(treePanel, 9);
 		
 	}
 
