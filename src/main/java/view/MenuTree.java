@@ -1,26 +1,54 @@
 package view;
 
-public class MenuTree expands Tree{
+import com.vaadin.event.ItemClickEvent;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import com.vaadin.navigator.Navigator;
+import com.vaadin.shared.MouseEventDetails.MouseButton;
+import com.vaadin.ui.Tree;
+
+public class MenuTree extends Tree{
+	
+	private static final long serialVersionUID = 1L;
+	
+	private String gestionLbl = "Gestion";
+	private String tagsLbl = "Tags";
+	private String accionesLbl = "Acciones";
+	private String reportingLbl = "Reporting";
+	private String wesaLbl = "Wesa";
 	
 	public MenuTree() {
+		
+		addItem(gestionLbl);
+		/**/addItem(tagsLbl);
+		/**/addItem(accionesLbl);
+		
+		addItem(reportingLbl);
+		/**/addItem(wesaLbl);
+		
+		setChildrenAllowed(tagsLbl, false);
+		setChildrenAllowed(accionesLbl, false);
+		setChildrenAllowed(wesaLbl, false);
+		
+		setParent(tagsLbl, gestionLbl);
+		setParent(accionesLbl, gestionLbl);
+		setParent(wesaLbl,reportingLbl);
+		
+		addItemClickListener(new ItemClickListener() {
+			private static final long serialVersionUID = 1L;
 
-
-		// An initial planet tree
-		Tree<String> tree = new Tree<>();
-		TreeData<String> treeData = new TreeData<>();
-
-		// Couple of childless root items
-		treeData.addItem(null,"Mercury");
-		treeData.addItem(null,"Venus");
-
-		// Items with hierarchy
-		treeData.addItem(null,"Earth");
-		treeData.addItem("Earth","The Moon");
-
-		inMemoryDataProvider = new TreeDataProvider<>(treeData);
-		tree.setDataProvider(inMemoryDataProvider);
-		tree.expand("Earth"); // Expand programmatically
-
+			@Override
+			public void itemClick(ItemClickEvent event) {
+				Navigator nav = getUI().getNavigator();
+				if (event.getButton() == MouseButton.LEFT){
+					String ID = (String)event.getItemId();
+					
+					if(ID == tagsLbl)
+						nav.navigateTo(TagsPanel.NAME);
+					
+				}
+				
+			}
+		});
 
 	}
 	
