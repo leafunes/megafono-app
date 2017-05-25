@@ -6,6 +6,9 @@ import data.Tag;
 
 public interface DAOTag extends DAO<Tag>{
 	
-	public List<Tag> getRootTags();
+	public List<Tag> getAllTags();
+	public Tag getTagByName(String nombre);
+	public Tag getParentOf(Tag t);
+	public void actualize(Tag oldTag, Tag newTag);
 
 }

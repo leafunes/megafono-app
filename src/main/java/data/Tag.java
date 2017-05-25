@@ -81,7 +81,12 @@ public class Tag {
 		return true;
 	}
 
+	public Precio getPrecio() {
+		return precio;
+	}
 
-
+	public void setPrecio(Precio precio) {
+		this.precio = precio;
+	}
 
 }

@@ -1,6 +1,8 @@
 package daos.impl;
 
 import org.neodatis.odb.ODB;
+import org.neodatis.odb.ODBFactory;
+import org.neodatis.odb.OdbConfiguration;
 
 import daos.iface.DAO;
 import misc.GlobalProperties;
@@ -10,6 +12,9 @@ public class DAONeodatis<T> implements DAO<T> {
 	
 	protected final String DBLocation = GlobalProperties.getGlobalProps().getProps().getProperty("DBLocation");
 	protected ODB odb;
+	
+	public DAONeodatis() {
+	}
 	
 	@Override
 	public void save(T t) {
@@ -33,10 +38,13 @@ public class DAONeodatis<T> implements DAO<T> {
 	}
 	
 	protected void openServer(){
-		odb = NeodatisServerContentListener.getServer().openClient(DBLocation);
+		//odb = NeodatisServerContentListener.getServer().openClient(DBLocation);
+		odb = ODBFactory.open(DBLocation);
+		
 	}
 	
 	protected void closeServer(){
+		odb.commit();
 		odb.close();
 	}
 
