@@ -50,7 +50,7 @@ public class TagsEdit extends Panel{
 							Tag oldTag = tagService.cloneTag(currentTag);
 							
 							binder.commit();
-							tagService.actualizeTag(oldTag, currentTag);
+							tagService.addTag(currentTag);//actualizeTag(oldTag, currentTag);
 							messageBox.publish("NewTag");
 							
 						}
@@ -73,6 +73,9 @@ public class TagsEdit extends Panel{
 		nombreTag.setValue(tag.getNombre());
 		
 		currentTag = tag;
+		
+		System.out.println(currentTag);
+		System.out.println(tag);
 
 		binder = BeanFieldGroup.bindFieldsBuffered(currentTag, this);
 		binder.bind(nombreTag, "nombre");

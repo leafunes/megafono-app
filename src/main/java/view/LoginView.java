@@ -51,7 +51,7 @@ public class LoginView extends VerticalLayout{
 			@Override
 			public void buttonClick(ClickEvent event) {
 				
-				if(!usuarioService.altaUsuario(username.getValue(), password.getValue()))
+				if(!usuarioService.altaUsuario(username.getValue(), password.getValue(), "cliente"))
 					Notification.show("Usuario ya existente", Notification.Type.ERROR_MESSAGE);
 				
 			}

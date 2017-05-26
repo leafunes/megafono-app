@@ -3,12 +3,14 @@ package data;
 public class Usuario {
 	
 	private String email;
-	private String password;
+	private String pswMd5;
+	private Rol rol;
 	
-	public Usuario(String email, String password) {
+	public Usuario(String email, String pswMd5, Rol rol) {
 		
 		this.email = email;
-		this.password = password;
+		this.pswMd5 = pswMd5;
+		this.rol = rol;
 		
 	}
 	
@@ -18,11 +20,19 @@ public class Usuario {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getPassword() {
-		return password;
+	public String getMd5() {
+		return pswMd5;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public void setMd5(String pswMd5) {
+		this.pswMd5 = pswMd5;
+	}
+
+	public Rol getRol() {
+		return rol;
+	}
+
+	public void setRol(Rol rol) {
+		this.rol = rol;
 	}
 	
 	

@@ -29,7 +29,7 @@ public class NeodatisServerContentListener implements ServletContextListener {
      * @see ServletContextListener#contextDestroyed(ServletContextEvent)
      */
     public void contextDestroyed(ServletContextEvent arg0)  { 
-         /*System.out.println("Bajando Neodatis");
+         System.out.println("Bajando Neodatis");
          
          if(server != null){
         	 try {
@@ -37,14 +37,14 @@ public class NeodatisServerContentListener implements ServletContextListener {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-         }*/
+         }
     }
 
 	/**
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent arg0)  { 
-    	/*try{
+    	try{
     		System.out.println("Inicializando Neodatis");
     		
     		server = ODBFactory.openServer(NEODATIS_SERVER_PORT);
@@ -57,7 +57,7 @@ public class NeodatisServerContentListener implements ServletContextListener {
     	catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
-		}*/
+		}
     	
     	
     }

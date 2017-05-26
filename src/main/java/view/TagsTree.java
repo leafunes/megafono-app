@@ -47,6 +47,8 @@ public class TagsTree extends Panel{
 					
 					tagSelected = tagService.getTagByName(tagSelectedName);
 					
+					System.out.println(tagSelected);
+					
 					editPanel.editTag(tagSelected);
 					
 				}

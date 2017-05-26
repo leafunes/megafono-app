@@ -15,6 +15,10 @@ import data.Tag;
 import misc.NeodatisServerContentListener;
 
 public class DAOTagNeodatis extends DAONeodatis<Tag> implements DAOTag{
+	
+	public DAOTagNeodatis(){
+		
+	}
 
 	@Override
 	public List<Tag> getAllTags() {
@@ -42,6 +46,9 @@ public class DAOTagNeodatis extends DAONeodatis<Tag> implements DAOTag{
 		
 		Tag toReturn = null;
 		Objects<Tag> objs = odb.getObjects(query);
+		
+		for(Tag t : objs)
+			System.out.println(t.getNombre());
 		
 		if(!objs.isEmpty())
 			toReturn = objs.getFirst();
