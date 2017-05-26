@@ -35,19 +35,14 @@ public class DAORolNeodatis extends DAONeodatis<Rol> implements DAORol{
 	@Override
 	public boolean existeRol(String nombre) {
 		
-		for(Rol r : db){
-			if(r.getNombre() == nombre)
-				return true;
-		}
-		
-		return false;
+		return getRolByName(nombre) != null;
 		
 	}
 
 	@Override
 	public Rol getRolByName(String nombre) {
 		for (Rol r : db) {
-			if(r.getNombre() == nombre)
+			if(r.getNombre().equals(nombre))
 				return r;
 		}
 		

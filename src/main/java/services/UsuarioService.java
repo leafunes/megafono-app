@@ -30,10 +30,9 @@ public class UsuarioService {
 		daoRol = new DAORolNeodatis();
 	}
 	
-	public boolean altaUsuario(String email, String password, String rol){
+	public void altaUsuario(String email, String password, String rol){
 		
-		if(daoUsuario.isUsernameInUse(email)) return false;
-		if(!daoRol.existeRol(rol)) return false;
+		if(!daoRol.existeRol(rol)) throw new IllegalArgumentException("Rol no existente");
 		
 		Rol rolToAdd= daoRol.getRolByName(rol);
 		
@@ -42,8 +41,10 @@ public class UsuarioService {
 		daoUsuario.save(toAdd);
 		
 		
-		return true;
-		
+	}
+	
+	public boolean isUsernameInUse(String nombre){
+		return daoUsuario.isUsernameInUse(nombre);
 	}
 	
 	public boolean loginUsuario(String nombre, String password){

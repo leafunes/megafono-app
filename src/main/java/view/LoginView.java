@@ -1,5 +1,8 @@
 package view;
 
+import com.vaadin.data.validator.EmailValidator;
+import com.vaadin.data.validator.NullValidator;
+import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -10,6 +13,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
 
 import daos.iface.DAO;
 import daos.impl.DAONeodatis;
@@ -23,7 +27,8 @@ public class LoginView extends VerticalLayout{
 	
 	private TextField username;
 	private PasswordField password;
-	private Button sendFields;
+	private Button loginButton;
+	private Button regisButton;
 	
 	private HorizontalLayout horizontalLayout;
 	private FormLayout loginForm;
@@ -42,17 +47,57 @@ public class LoginView extends VerticalLayout{
 	
 	private void init(){
 		
-		username = new TextField("Nombre de Usuario");
+		username = new TextField("Mail");
 		password = new PasswordField("Contraseña");
-		sendFields = new Button("Login");
+		loginButton = new Button("Login");
+		regisButton = new Button("Registrarse");
 		
-		sendFields.addClickListener(new ClickListener() {
+		loginButton.addStyleName(ValoTheme.BUTTON_FRIENDLY);
+		
+
+		username.setBuffered(true);
+		username.setNullSettingAllowed(true);
+		username.setNullRepresentation("");
+		username.addValidator(new NullValidator("Debe ingresar un email", false));
+		username.addValidator(new EmailValidator("No es un email valido"));
+		
+		//password.setBuffered(true);
+		password.setNullSettingAllowed(true);
+		password.setNullRepresentation("");
+		password.addValidator(new NullValidator("Debe ingresar una contraseña", false));
+		
+		loginButton.addClickListener(new ClickListener() {
 			
 			@Override
 			public void buttonClick(ClickEvent event) {
 				
-				if(!usuarioService.altaUsuario(username.getValue(), password.getValue(), "cliente"))
-					Notification.show("Usuario ya existente", Notification.Type.ERROR_MESSAGE);
+				if(username.isValid() && !username.getValue().isEmpty() &&
+						password.isValid() && !password.getValue().isEmpty()){
+					if(usuarioService.loginUsuario(username.getValue(), password.getValue()))
+						getUI().setContent(new MainView());
+					
+					else
+						Notification.show("Datos invalidos", Notification.Type.ERROR_MESSAGE);
+					}				
+			}
+		});
+		
+		regisButton.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				
+				if(username.isValid() && !username.getValue().isEmpty() &&
+						password.isValid() && !password.getValue().isEmpty()){
+					if(!usuarioService.isUsernameInUse(username.getValue())){
+						usuarioService.altaUsuario(username.getValue(), password.getValue(), "cliente");
+						
+						getUI().setContent(new MainView());
+					}
+					
+					else
+						Notification.show("Email ya en uso", Notification.Type.ERROR_MESSAGE);
+					}	
 				
 			}
 		});
@@ -60,9 +105,15 @@ public class LoginView extends VerticalLayout{
 		loginForm = new FormLayout();
 		horizontalLayout = new HorizontalLayout();
 		
+		HorizontalLayout buttons = new HorizontalLayout();
+		
+		buttons.addComponent(loginButton);
+		buttons.addComponent(regisButton);
+		buttons.setSpacing(true);
+		
 		loginForm.addComponent(username);
 		loginForm.addComponent(password);
-		loginForm.addComponent(sendFields);
+		loginForm.addComponent(buttons);
 		
 		
 		horizontalLayout.addComponent(loginForm);
@@ -72,5 +123,6 @@ public class LoginView extends VerticalLayout{
 		setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
 		
 	}
+
 	
 }

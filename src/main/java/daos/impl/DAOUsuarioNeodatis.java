@@ -27,8 +27,9 @@ public class DAOUsuarioNeodatis extends DAONeodatis<Usuario>implements DAOUsuari
 		
 		Rol rolAnalista = roles.getRolByName("analista");
 		
-		Usuario lea = new Usuario("lea.com", "08e139f7d88e2832bd2d7c5457a66d049", rolAnalista);
-		
+		Usuario lea = new Usuario("lea@lea.com", "8e139f7d88e2832bd2d7c5457a66d049", rolAnalista);
+		//psw: leandroFunes
+		db.add(lea);
 	}
 	
 	@Override
@@ -45,12 +46,7 @@ public class DAOUsuarioNeodatis extends DAONeodatis<Usuario>implements DAOUsuari
 
 	@Override
 	public boolean existeUsuario(String username, String md5) {
-		for (Usuario u : db) {
-			if(u.getEmail() == username && u.getMd5() == md5)
-				return true;
-		}
-		
-		return false;
+		return getUsuario(username, md5) != null;
 	}
 	
 	@Override
@@ -63,7 +59,7 @@ public class DAOUsuarioNeodatis extends DAONeodatis<Usuario>implements DAOUsuari
 	@Override
 	public Usuario getUsuario(String username, String md5) {
 		for (Usuario u : db) {
-			if(u.getEmail() == username && u.getMd5() == md5)
+			if(u.getEmail().equals(username) && u.getMd5().equals(md5))
 				return u;
 		}
 		
