@@ -42,7 +42,75 @@ public class TagsTree extends Panel{
 		tagsTree = new Tree();
 		tagsTree.setSizeFull();
 		
+		tagsTree.setDragMode(TreeDragMode.NODE);
 		
+		tagsTree.setDropHandler(new DropHandler() {
+			
+			@Override
+			public AcceptCriterion getAcceptCriterion() {
+				return AcceptAll.get();
+			}
+			
+			@Override
+			public void drop(DragAndDropEvent event) {
+				 // Wrapper for the object that is dragged
+		        Transferable t = event.getTransferable();
+		        
+
+		        // Make sure the drag source is the same tree
+		        if (t.getSourceComponent() != tagsTree)
+		            return;
+
+		        TreeTargetDetails target = (TreeTargetDetails)
+		            event.getTargetDetails();
+
+		        // Get ids of the dragged item and the target item
+		        Object sourceItemId = t.getData("itemId");
+		        Object targetItemId = target.getItemIdOver();
+		        Object preParent =  tagsTree.getParent(sourceItemId);
+
+		        // On which side of the target the item was dropped
+		        VerticalDropLocation location = target.getDropLocation();
+
+		        HierarchicalContainer container = (HierarchicalContainer)
+		        tagsTree.getContainerDataSource();
+
+	            Object parentId = container.getParent(targetItemId);
+		        
+		        Tag sourceTag = tagService.getTagByName((String)sourceItemId);
+		        Tag targetTag = tagService.getTagByName((String)targetItemId);
+		        Tag parentTag = tagService.getTagByName((String)parentId);
+		        System.out.println(sourceTag.getNombre());
+		        System.out.println(targetTag.getNombre());
+		        System.out.println(parentId);
+		        // Drop right on an item -> make it a child
+		        if (location == VerticalDropLocation.MIDDLE){
+		            tagsTree.setChildrenAllowed(targetItemId, true);
+		            tagsTree.setParent(sourceItemId, targetItemId);
+		            tagService.setPadre(sourceTag, targetTag);
+		        }
+
+		        // Drop at the top of a subtree -> make it previous
+		        else if (location == VerticalDropLocation.TOP) {
+		            container.setParent(sourceItemId, parentId);
+		            tagService.setPadre(sourceTag, parentTag);
+		            if(tagsTree.isRoot(preParent))
+		            	tagsTree.setChildrenAllowed(preParent, false);
+		            container.moveAfterSibling(sourceItemId, targetItemId);
+		            container.moveAfterSibling(targetItemId, sourceItemId);
+		        }
+
+		        // Drop below another item -> make it next
+		        else if (location == VerticalDropLocation.BOTTOM) {
+		            container.setParent(sourceItemId, parentId);
+		            tagService.setPadre(sourceTag, parentTag);
+		            if(tagsTree.isRoot(preParent))
+		            	tagsTree.setChildrenAllowed(preParent, false);
+		            container.moveAfterSibling(sourceItemId, targetItemId);
+		        }
+				
+			}
+		});
 		
 		tagsTree.addExpandListener(event -> isExtended.put((String)event.getItemId(), true));
 		
