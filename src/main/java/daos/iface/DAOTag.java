@@ -9,6 +9,5 @@ public interface DAOTag extends DAO<Tag>{
 	public List<Tag> getAllTags();
 	public Tag getTagByName(String nombre);
 	public Tag getParentOf(Tag t);
-	public void actualize(Tag oldTag, Tag newTag);
 
 }

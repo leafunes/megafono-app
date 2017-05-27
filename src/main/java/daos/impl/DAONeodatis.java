@@ -14,8 +14,7 @@ public class DAONeodatis<T> implements DAO<T> {
 	protected ODB odb;
 	
 	public DAONeodatis() {
-		
-		OdbConfiguration.setReconnectObjectsToSession(true);
+
 		
 	}
 	
@@ -41,8 +40,9 @@ public class DAONeodatis<T> implements DAO<T> {
 	}
 	
 	protected void openServer(){
+
+		OdbConfiguration.setReconnectObjectsToSession(true);
 		odb = NeodatisServerContentListener.getServer().openClient(DBLocation);
-		//odb = ODBFactory.open(DBLocation);
 		
 	}
 	

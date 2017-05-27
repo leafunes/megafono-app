@@ -73,8 +73,11 @@ public class LoginView extends VerticalLayout{
 				
 				if(username.isValid() && !username.getValue().isEmpty() &&
 						password.isValid() && !password.getValue().isEmpty()){
-					if(usuarioService.loginUsuario(username.getValue(), password.getValue()))
-						getUI().setContent(new MainView());
+					if(usuarioService.loginUsuario(username.getValue(), password.getValue())){
+						MainView view = new MainView();
+						getUI().setContent(view);
+						view.initNavigator();
+					}
 					
 					else
 						Notification.show("Datos invalidos", Notification.Type.ERROR_MESSAGE);

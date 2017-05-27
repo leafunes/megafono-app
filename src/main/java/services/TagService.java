@@ -24,14 +24,6 @@ public class TagService {
 		
 	}
 	
-	public Tag cloneTag(Tag toClone){
-		Tag toReturn = new Tag(toClone.getNombre(), toClone.getPrecio());
-		
-		toReturn.setPadre(toClone.getPadre());
-		
-		return toReturn;
-	}
-	
 	public Tag getTagByName(String name){
 		
 		return daoTag.getTagByName(name);
@@ -43,8 +35,12 @@ public class TagService {
 		
 	}
 	
-	public void actualizeTag(Tag oldTag, Tag newTag){
-		daoTag.actualize(oldTag, newTag);
+	public void setPadre(Tag hijo, Tag padre){
+		
+		hijo.setPadre(padre);
+		
+		daoTag.save(hijo);
+		
 	}
 	
 	public List<Tag> getAllTags(){

@@ -1,23 +1,24 @@
 package view;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import com.vaadin.data.Item;
-import com.vaadin.event.ItemClickEvent;
-import com.vaadin.event.ItemClickEvent.ItemClickListener;
-import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.shared.MouseEventDetails.MouseButton;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.data.util.HierarchicalContainer;
+import com.vaadin.event.Transferable;
+import com.vaadin.event.dd.DragAndDropEvent;
+import com.vaadin.event.dd.DropHandler;
+import com.vaadin.event.dd.acceptcriteria.AcceptAll;
+import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
+import com.vaadin.shared.ui.dd.VerticalDropLocation;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.Tree;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Tree.TreeDragMode;
+import com.vaadin.ui.Tree.TreeTargetDetails;
 import com.vaadin.ui.themes.ValoTheme;
 
 import data.Tag;
 import misc.MessageBox;
-import misc.Procedure;
 import services.TagService;
 
 public class TagsTree extends Panel{
@@ -25,6 +26,8 @@ public class TagsTree extends Panel{
 	private Tree tagsTree;
 	private TagService tagService;
 	private Tag tagSelected;
+	
+	private Map<String, Boolean> isExtended;
 	
 	private MessageBox messageBox = MessageBox.getMessageBox();
 	
@@ -34,27 +37,31 @@ public class TagsTree extends Panel{
 		
 		tagService = TagService.getService();
 		
+		isExtended = new HashMap<>();
+		
 		tagsTree = new Tree();
 		tagsTree.setSizeFull();
 		
-		tagsTree.addItemClickListener(new ItemClickListener() {
-			
-			@Override
-			public void itemClick(ItemClickEvent event) {
-				if(event.getButton() == MouseButton.LEFT){
-					
-					String tagSelectedName = (String)event.getItemId();
-					
-					tagSelected = tagService.getTagByName(tagSelectedName);
-					
-					System.out.println(tagSelected);
-					
-					editPanel.editTag(tagSelected);
-					
-				}
+		
+		
+		tagsTree.addExpandListener(event -> isExtended.put((String)event.getItemId(), true));
+		
+
+		tagsTree.addCollapseListener(event -> isExtended.put((String)event.getItemId(), false));
+		
+		tagsTree.addValueChangeListener(event -> {
+		    if (event.getProperty() != null && event.getProperty().getValue() != null) {
+				String tagSelectedName = (String) event.getProperty().getValue();
 				
-			}
+				tagSelected = tagService.getTagByName(tagSelectedName);
+				
+				editPanel.editTag(tagSelected);
+		    }
+		    else{
+		    	tagSelected = null;
+		    }
 		});
+		
 		
 		loadTree();
 		
@@ -67,33 +74,53 @@ public class TagsTree extends Panel{
 	
 	private void loadTree(){
 		
-		tagsTree.clear();
+		tagsTree.removeAllItems();
 
 		List<Tag> tags = tagService.getAllTags();
 		
-		tags.forEach(t -> tagsTree.addItem(t.getNombre()));
+		tags.forEach(t -> {
+			tagsTree.addItem(t.getNombre());
+			if(!isExtended.containsKey(t.getNombre()))
+				isExtended.put(t.getNombre(), false);
+		});
 		
 		for (Tag t: tags) {
-	
-			if(t.getPadre() != null)
-				tagsTree.setParent(t.getNombre(), t.getPadre().getNombre());
-			else
-				tagsTree.setChildrenAllowed(t.getNombre(), false);
+
+			if(isExtended.get(t.getNombre()))
+				tagsTree.expandItem(t.getNombre());
 			
+			tagsTree.setChildrenAllowed(t.getNombre(), false);
+			
+			if(t.getPadre() != null){
+
+				tagsTree.setChildrenAllowed(t.getPadre().getNombre(), true);
+
+				tagsTree.setParent(t.getNombre(), t.getPadre().getNombre());
+
+
+			}
 		}
 		
 	}
 	
 	public void addTag(String name){
 		
-		tagService.addTag(new Tag(name, null));
+		tagService.addTag(new Tag(name, tagSelected));
 		
+		isExtended.put(name, false);
+
 		tagsTree.addItem(name);
 		tagsTree.setChildrenAllowed(name, false);
 		
 		if(tagSelected != null){
+			tagsTree.setChildrenAllowed(tagSelected.getNombre(), true);
 			tagsTree.setParent(name, tagSelected.getNombre());
+			
+			tagsTree.expandItem(tagSelected.getNombre());
+			isExtended.put(tagSelected.getNombre(), true);
 		}
+		
+		tagsTree.select(name);//Para que se edite
 	}
 	
 	
