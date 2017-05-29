@@ -25,6 +25,7 @@ public class MyUI extends UI {
     	/*LoginView login = new LoginView();
 		setContent(login);
     	*/
+		
     	MainView mainView = new MainView();
     	setContent(mainView);
     	

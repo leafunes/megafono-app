@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.vaadin.data.util.HierarchicalContainer;
+import com.vaadin.data.util.filter.SimpleStringFilter;
+import com.vaadin.event.FieldEvents;
+import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.Transferable;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
@@ -11,9 +15,11 @@ import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.shared.ui.dd.VerticalDropLocation;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.Tree;
 import com.vaadin.ui.Tree.TreeDragMode;
 import com.vaadin.ui.Tree.TreeTargetDetails;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 import data.Tag;
@@ -32,9 +38,10 @@ public class TagsTree extends Panel{
 	
 	private MessageBox messageBox = MessageBox.getMessageBox();
 	
+	
 	public TagsTree(TagsEdit editPanel) {
 		
-		messageBox.suscribirse("NewTag", () -> loadTree());
+		messageBox.suscribirse("ModifyInTags", () -> loadTree());
 		
 		tagService = TagService.getService();
 		
@@ -43,7 +50,7 @@ public class TagsTree extends Panel{
 		tagsTree = new Tree();
 		tagsTree.setSizeFull();
 		tagsTree.setDragMode(TreeDragMode.NODE);
-		
+				
 		initDropHandler();
 		
 		initListeners();
@@ -51,7 +58,8 @@ public class TagsTree extends Panel{
 		loadTree();
 		
 		setContent(tagsTree);
-		setSizeFull();
+		
+		//setSizeFull();
 		setStyleName(ValoTheme.PANEL_BORDERLESS);
 		
 		
@@ -60,10 +68,10 @@ public class TagsTree extends Panel{
 	private void loadTree(){
 		
 		saveState();
-		
+	
 		tagsTree.removeAllItems();
 
-		List<Tag> tags = tagService.getAllTags();
+		List<Tag> tags = tagService.getAllHabilitedTags();
 		
 		tags.forEach(t -> tagsTree.addItem(t.getNombre()));
 		
@@ -91,14 +99,16 @@ public class TagsTree extends Panel{
 
 		tagsTree.addItem(name);
 		tagsTree.setChildrenAllowed(name, false);
-		tagsTree.select(name);//Para que se edite
-		
+	
 		if(tagSelected != null){
 			tagsTree.setChildrenAllowed(tagSelected.getNombre(), true);
 			tagsTree.setParent(name, tagSelected.getNombre());
 			
 			tagsTree.expandItem(tagSelected.getNombre());
 		}
+		
+		tagsTree.select(name);//Para que se edite
+		
 		
 	}
 	
@@ -125,7 +135,6 @@ public class TagsTree extends Panel{
 		
 		tagsTree.getItemIds().forEach( id -> state.put((String)id, tagsTree.isExpanded(id)));
 		
-		state.forEach((id, expanded) -> System.out.println(id + " " + expanded));
 		
 	}
 	
@@ -169,9 +178,6 @@ public class TagsTree extends Panel{
 		        Tag targetTag = tagService.getTagByName((String)targetItemId);
 		        Tag parentTag = tagService.getTagByName((String)parentId);
 		        
-		        if(!tagsTree.hasChildren(preParentId))
-	            	tagsTree.setChildrenAllowed(preParentId, false);
-
 		        // On which side of the target the item was dropped
 		        VerticalDropLocation location = target.getDropLocation();
 
@@ -187,6 +193,10 @@ public class TagsTree extends Panel{
 		        else{
 		            tagsTree.setParent(sourceItemId, parentId);
 		            tagService.setPadre(sourceTag, parentTag);
+		            
+		            if(!tagsTree.hasChildren(preParentId))
+		            	tagsTree.setChildrenAllowed(preParentId, false);
+
 		        }
 		        
 				

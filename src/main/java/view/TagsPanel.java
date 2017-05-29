@@ -66,8 +66,8 @@ public class TagsPanel extends Panel implements View{
 		leftLayout.addComponent(treePanel);
 		leftLayout.setComponentAlignment(agregaTagBtt, Alignment.MIDDLE_CENTER);
 
-		leftLayout.setSizeFull();
-		leftLayout.setExpandRatio(treePanel, 9);
+		//leftLayout.setSizeFull();
+		//leftLayout.setExpandRatio(treePanel, 9);
 		
 	}
 

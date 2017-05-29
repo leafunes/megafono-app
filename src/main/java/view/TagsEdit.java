@@ -40,28 +40,33 @@ public class TagsEdit extends Panel{
 		nombreTag = new TextField();
 		
 		Button okBtt = new Button("OK");
-		okBtt.addClickListener(new ClickListener() {
+		okBtt.addClickListener(event -> {
 			
-			@Override
-			public void buttonClick(ClickEvent event) {
 				
 					try {
 						if(binder != null){
 							
 							binder.commit();
 							tagService.addTag(currentTag);
-							messageBox.publish("NewTag");
+							messageBox.publish("ModifyInTags");
 							
 						}
 					} catch (CommitException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-			}
+		});
+		
+		Button deleteBtt = new Button("Borrar");
+		
+		deleteBtt.addClickListener(event -> {
+			tagService.deleteTag(currentTag);
+			currentTag = null;
+			messageBox.publish("ModifyInTags");
 		});
 		
 		mainLayout.addComponent(nombreTag);
 		mainLayout.addComponent(okBtt);
+		mainLayout.addComponent(deleteBtt);
 		mainLayout.setSizeFull();
 		
 		setContent(mainLayout);

@@ -22,15 +22,17 @@ public class DAOTagNeodatis extends DAONeodatis<Tag> implements DAOTag{
 	}
 
 	@Override
-	public List<Tag> getAllTags() {
+	public List<Tag> getAllHabilitedTags() {
 		
 		List<Tag> toReturn = new ArrayList<>();
 		
-		openServer();
+		IQuery query = new CriteriaQuery(Tag.class, Where.equal("habilitado", true));
 		
-		Objects<Tag> objects = odb.getObjects(Tag.class);
+		openClient();
 		
-		closeServer();
+		Objects<Tag> objects = odb.getObjects(query);
+		
+		closeClient();
 		
 		toReturn.addAll(objects);
 		
@@ -43,7 +45,7 @@ public class DAOTagNeodatis extends DAONeodatis<Tag> implements DAOTag{
 		
 		IQuery query = new CriteriaQuery(Tag.class, Where.equal("nombre", nombre));
 		
-		openServer();
+		openClient();
 		
 		Tag toReturn = null;
 		Objects<Tag> objs = odb.getObjects(query);
@@ -51,7 +53,7 @@ public class DAOTagNeodatis extends DAONeodatis<Tag> implements DAOTag{
 		if(!objs.isEmpty())
 			toReturn = objs.getFirst();
 		
-		closeServer();
+		closeClient();
 		
 		return toReturn;
 		
@@ -62,7 +64,7 @@ public class DAOTagNeodatis extends DAONeodatis<Tag> implements DAOTag{
 		
 		IQuery query = new CriteriaQuery(Tag.class, Where.equal("padre.nombre", t.getPadre().getNombre()));
 		
-		openServer();
+		openClient();
 
 		Tag toReturn = null;
 		Objects<Tag> objs = odb.getObjects(query);
@@ -70,10 +72,27 @@ public class DAOTagNeodatis extends DAONeodatis<Tag> implements DAOTag{
 		if(!objs.isEmpty())
 			toReturn = objs.getFirst();
 		
-		closeServer();
+		closeClient();
 		
 		return toReturn;
 
+	}
+
+	@Override
+	public List<Tag> getChildrensOf(Tag t) {
+		List<Tag> toReturn = new ArrayList<>();
+		
+		IQuery query = new CriteriaQuery(Tag.class, Where.equal("padre.nombre", t.getNombre()));
+		
+		openClient();
+		
+		Objects<Tag> obj = odb.getObjects(query);
+		
+		closeClient();
+		
+		toReturn.addAll(obj);
+		
+		return toReturn;
 	}
 
 }

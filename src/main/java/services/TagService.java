@@ -43,9 +43,22 @@ public class TagService {
 		
 	}
 	
-	public List<Tag> getAllTags(){
+	public List<Tag> getAllHabilitedTags(){
 		
-		return daoTag.getAllTags();
+		return daoTag.getAllHabilitedTags();
+	}
+
+	public void deleteTag(Tag tag) {
+		
+		tag.setHabilitado(false);
+		
+		List<Tag> childrensOf = daoTag.getChildrensOf(tag);
+		
+		childrensOf.forEach(t -> t.setHabilitado(false));
+		
+		daoTag.saveAll(childrensOf);
+		daoTag.save(tag);
+		
 	}
 	
 
