@@ -12,6 +12,8 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
+import view.tags.TagsPanel;
+
 
 public class MainView extends VerticalLayout implements View{
 	

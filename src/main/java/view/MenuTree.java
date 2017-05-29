@@ -6,6 +6,8 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.shared.MouseEventDetails.MouseButton;
 import com.vaadin.ui.Tree;
 
+import view.tags.TagsPanel;
+
 public class MenuTree extends Tree{
 	
 	private static final long serialVersionUID = 1L;

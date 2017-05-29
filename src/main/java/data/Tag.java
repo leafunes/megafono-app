@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Tag {
 	
 	private String nombre;
+	private String descripcion;
 	private Tag padre;
 	private boolean habilitado;
 	
@@ -16,6 +17,7 @@ public class Tag {
 		this.nombre = nombre;
 		this.padre = padre;
 		this.habilitado = true;
+		this.descripcion = "";
 		
 	}
 
@@ -59,6 +61,14 @@ public class Tag {
 
 	public boolean isHabilitado() {
 		return habilitado;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 	public void setHabilitado(boolean habilitado) {

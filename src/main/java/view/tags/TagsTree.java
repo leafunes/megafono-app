@@ -1,4 +1,4 @@
-package view;
+package view.tags;
 
 import java.util.HashMap;
 import java.util.List;
@@ -55,6 +55,8 @@ public class TagsTree extends Panel{
 		
 		initListeners();
 		
+		initDisabledStyle();
+		
 		loadTree();
 		
 		setContent(tagsTree);
@@ -65,13 +67,27 @@ public class TagsTree extends Panel{
 		
 	}
 	
+	private void initDisabledStyle() {
+		tagsTree.setItemStyleGenerator(new Tree.ItemStyleGenerator() {
+
+			@Override
+			public String getStyle(Tree source, Object itemId) {
+				Tag t = tagService.getTagByName((String)itemId);
+				 if (!t.isHabilitado())
+			            return "disabled";
+			        return null;
+			}
+		});
+		
+	}
+
 	private void loadTree(){
 		
 		saveState();
 	
 		tagsTree.removeAllItems();
 
-		List<Tag> tags = tagService.getAllHabilitedTags();
+		List<Tag> tags = tagService.getAllTags();
 		
 		tags.forEach(t -> tagsTree.addItem(t.getNombre()));
 		
@@ -87,7 +103,10 @@ public class TagsTree extends Panel{
 
 
 			}
+				
+			
 		}
+
 		
 		loadState();
 		
@@ -193,12 +212,11 @@ public class TagsTree extends Panel{
 		        else{
 		            tagsTree.setParent(sourceItemId, parentId);
 		            tagService.setPadre(sourceTag, parentTag);
-		            
-		            if(!tagsTree.hasChildren(preParentId))
-		            	tagsTree.setChildrenAllowed(preParentId, false);
 
 		        }
-		        
+
+	            if(!tagsTree.hasChildren(preParentId))
+	            	tagsTree.setChildrenAllowed(preParentId, false);
 				
 			}
 		});

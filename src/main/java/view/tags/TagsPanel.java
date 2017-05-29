@@ -1,4 +1,4 @@
-package view;
+package view.tags;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -50,7 +50,7 @@ public class TagsPanel extends Panel implements View{
 		TagsTree treePanel = new TagsTree(editPanel);
 		
 		Button agregaTagBtt = new Button("Agregar");
-		agregaTagBtt.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		agregaTagBtt.setStyleName(ValoTheme.BUTTON_BORDERLESS);
 		agregaTagBtt.setWidth(100, Unit.PERCENTAGE);
 		
 		agregaTagBtt.addClickListener(new ClickListener() {

@@ -95,4 +95,20 @@ public class DAOTagNeodatis extends DAONeodatis<Tag> implements DAOTag{
 		return toReturn;
 	}
 
+	@Override
+	public List<Tag> getAllTags() {
+		
+		List<Tag> toReturn = new ArrayList<>();
+		
+		openClient();
+		
+		Objects<Tag> objs = odb.getObjects(Tag.class);
+		
+		closeClient();
+		
+		toReturn.addAll(objs);
+		
+		return toReturn;
+	}
+
 }

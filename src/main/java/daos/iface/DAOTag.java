@@ -11,5 +11,6 @@ public interface DAOTag extends DAO<Tag>{
 	public List<Tag> getAllHabilitedTags();
 	public Tag getTagByName(String nombre);
 	public Tag getParentOf(Tag t);
+	public List<Tag> getAllTags();
 
 }
