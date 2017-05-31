@@ -31,11 +31,17 @@ public class TagsEdit extends Panel{
 	
 	private TabSheet tabs;
 	private TagsEditDescripcion editDescripcion;
+	private TagsEditPricing editPricing;
 	private GridLayout mainLayout;
+	
+	private MessageBox messageBox;
 	
 	public TagsEdit(){
 		
+		messageBox = MessageBox.getMessageBox();
+		
 		editDescripcion = new TagsEditDescripcion();
+		editPricing = new TagsEditPricing(); //TODO
 		mainLayout = new GridLayout(6,2);
 		
 		Button okBtt = new Button("OK");
@@ -52,6 +58,8 @@ public class TagsEdit extends Panel{
 		
 		cancelBtt.addClickListener(event -> {
 			editDescripcion.editTag(null);
+			messageBox.publish("CancelButtonTag");
+			
 		});
 		
 		cancelBtt.setWidth(100, Unit.PERCENTAGE);
@@ -59,9 +67,9 @@ public class TagsEdit extends Panel{
 		tabs = new TabSheet();
 
 		tabs.addTab(editDescripcion, "Descripcion");
-		tabs.addTab(new Label("1"), "Acciones");
-		tabs.addTab(new Label("1"), "Pricing");
-		tabs.addTab(new Label("1"), "Borrar Tag");
+		tabs.addTab(new Label("TODO"), "Acciones");
+		tabs.addTab(new Label("TODO"), "Pricing");
+		tabs.addTab(new Label("TODO"), "Borrar Tag");
 		tabs.setSizeFull();
 		
 

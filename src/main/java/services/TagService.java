@@ -55,7 +55,7 @@ public class TagService {
 	public void deleteTag(Tag tag) {
 		
 		
-		List<Tag> childrensOf = daoTag.getChildrensOf(tag);
+		List<Tag> childrensOf = daoTag.getChildrenOf(tag);
 		
 		daoTag.deleteAll(childrensOf);
 		daoTag.delete(tag);
@@ -64,7 +64,7 @@ public class TagService {
 
 	public void actulizeHabilitations(Tag tag) {
 		
-		List<Tag> childrensOf = daoTag.getChildrensOf(tag);
+		List<Tag> childrensOf = daoTag.getChildrenOf(tag);
 		
 		childrensOf.forEach(t -> t.setHabilitado(tag.isHabilitado()));
 		

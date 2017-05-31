@@ -79,7 +79,7 @@ public class DAOTagNeodatis extends DAONeodatis<Tag> implements DAOTag{
 	}
 
 	@Override
-	public List<Tag> getChildrensOf(Tag t) {
+	public List<Tag> getChildrenOf(Tag t) {
 		List<Tag> toReturn = new ArrayList<>();
 		
 		IQuery query = new CriteriaQuery(Tag.class, Where.equal("padre.nombre", t.getNombre()));

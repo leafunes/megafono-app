@@ -39,7 +39,8 @@ public class MessageBox{
 	}
 	
 	public void publish(String message){
-		subscriptores.get(message).forEach(a -> a.execute());
+		if(subscriptores.containsKey(message))
+			subscriptores.get(message).forEach(a -> a.execute());
 	}
 
 }

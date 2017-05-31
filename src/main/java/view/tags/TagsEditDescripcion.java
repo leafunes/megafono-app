@@ -58,11 +58,18 @@ public class TagsEditDescripcion extends VerticalLayout{
 	public void editTag (Tag t){
 		
 		currentTag = t;
-
-		binder = BeanFieldGroup.bindFieldsBuffered(currentTag, this);
-		binder.bind(nombreTag, "nombre");
-		binder.bind(descripcionTag, "descripcion");
-		binder.bind(habilitadoTag, "habilitado");
+		if(t != null){
+			binder = BeanFieldGroup.bindFieldsBuffered(currentTag, this);
+			binder.bind(nombreTag, "nombre");
+			binder.bind(descripcionTag, "descripcion");
+			binder.bind(habilitadoTag, "habilitado");
+		}
+		else{
+			binder = null;
+			nombreTag.setValue("");
+			descripcionTag.setValue("");
+			habilitadoTag.setValue(false);
+		}
 	}
 	
 	public void commit(){

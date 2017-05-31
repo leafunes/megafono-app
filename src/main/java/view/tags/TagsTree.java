@@ -42,6 +42,7 @@ public class TagsTree extends Panel{
 	public TagsTree(TagsEdit editPanel) {
 		
 		messageBox.suscribirse("ModifyInTags", () -> loadTree());
+		messageBox.suscribirse("CancelButtonTag", () -> deselect());
 		
 		tagService = TagService.getService();
 		
@@ -67,6 +68,14 @@ public class TagsTree extends Panel{
 		
 	}
 	
+	private void deselect() {
+		if(tagSelected != null){
+			tagsTree.unselect(tagSelected.getNombre());
+			tagSelected = null;
+		}
+		
+	}
+
 	private void initDisabledStyle() {
 		tagsTree.setItemStyleGenerator(new Tree.ItemStyleGenerator() {
 
@@ -217,6 +226,11 @@ public class TagsTree extends Panel{
 
 	            if(!tagsTree.hasChildren(preParentId))
 	            	tagsTree.setChildrenAllowed(preParentId, false);
+	            
+
+		        //Select the source tag
+		        tagSelected = sourceTag;
+		        tagsTree.select(sourceTag.getNombre());
 				
 			}
 		});
