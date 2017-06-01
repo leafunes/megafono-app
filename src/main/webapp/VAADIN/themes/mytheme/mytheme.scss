@@ -33,11 +33,19 @@
 
 @mixin mytheme {
   @include valo;
+  
+	.v-tree-node-caption-disabled{
+		color: graytext;
+		font-style: italic;
+	}
+	
+	.v-label-warning{
+		color: red;
+		font-size: 20px;
+		text-align: center;
+	}
 
 
 }
 
-.v-tree-node-caption-disabled{
-	color: graytext;
-	font-style: italic;
-}
+
