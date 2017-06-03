@@ -15,8 +15,7 @@ import services.PrecioService;
 
 public class TagsEditPricing extends VerticalLayout{
 	
-	private TextField leftComma;
-	private TextField rigthComma;
+	private TextField montoField;
 	
 	private Label currentPrice;
 	
@@ -34,35 +33,40 @@ public class TagsEditPricing extends VerticalLayout{
 		messageBox = MessageBox.getMessageBox();
 		
 		newPrecio = new Precio();
-		newPrecio.setLeftComma(0);
-		newPrecio.setRigthComma(0);
+		newPrecio.setMonto("0.0");
 		
-		leftComma = new TextField();
-		rigthComma = new TextField();
+		montoField = new TextField();
 		
 		currentPrice = new Label();
 		
-		addComponent(leftComma);
-		addComponent(rigthComma);
+		addComponent(montoField);
 		addComponent(currentPrice);
 		
 	}
 	
 	public void editTag(Tag t){
 		
-		Precio precio = precioService.getCurrentPriceOf(t);
-		if(precio != null)currentPrice.setValue(precio.getLeftComma() + "," + precio.getRigthComma());
-		
-		currentTag = t;
-		newPrecio.setObjetoValuable(t);
-		
-		binder = BeanFieldGroup.bindFieldsBuffered(newPrecio, this);
-		binder.bind(leftComma, "leftComma");
-		binder.bind(rigthComma, "rigthComma");
+		if(t != null){
+			
+			Precio precio = precioService.getCurrentPriceOf(t);
+			if(precio != null)currentPrice.setValue(precio.getMonto().toPlainString());
+			else currentPrice.setValue("0.0");
+			
+			currentTag = t;
+			newPrecio.setObjetoValuable(t);
+			
+			binder = BeanFieldGroup.bindFieldsBuffered(newPrecio, this);
+			binder.bind(montoField, "monto");
+		}
+		else{
+			
+			montoField.setValue("0.0");
+			currentPrice.setValue("0.0");
+			
+		}
 	}
 	
 	public void commit(){
-		
 		try {
 			if(binder != null){
 				
