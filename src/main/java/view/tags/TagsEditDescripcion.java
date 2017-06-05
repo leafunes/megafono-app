@@ -1,16 +1,11 @@
 package view.tags;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
-import com.vaadin.data.fieldgroup.FieldGroup.CommitEvent;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -19,7 +14,8 @@ import data.Tag;
 import misc.MessageBox;
 import services.TagService;
 
-public class TagsEditDescripcion extends VerticalLayout{
+@SuppressWarnings("serial")
+public class TagsEditDescripcion extends VerticalLayout implements TagEditor{
 	
 	private Tag currentTag;
 	private TagService tagService;
@@ -55,41 +51,43 @@ public class TagsEditDescripcion extends VerticalLayout{
 		
 	}
 	
+	@Override
 	public void editTag (Tag t){
 		
 		currentTag = t;
-		if(t != null){
-			binder = BeanFieldGroup.bindFieldsBuffered(currentTag, this);
-			binder.bind(nombreTag, "nombre");
-			binder.bind(descripcionTag, "descripcion");
-			binder.bind(habilitadoTag, "habilitado");
-		}
-		else{
-			binder = null;
-			nombreTag.setValue("");
-			descripcionTag.setValue("");
-			habilitadoTag.setValue(false);
-		}
+
+		binder = BeanFieldGroup.bindFieldsBuffered(currentTag, this);
+		
+		binder.bind(nombreTag, "nombre");
+		binder.bind(descripcionTag, "descripcion");
+		binder.bind(habilitadoTag, "habilitado");
 	}
 	
+	@Override
 	public void commit(){
-		
-		try {
+			
+		try{ 
 			if(binder != null){
 				
-				boolean oldHabilitado = currentTag.isHabilitado();
-				
 				binder.commit();
+				tagService.actulizeHabilitations(currentTag);
 				tagService.addTag(currentTag);
-				if(oldHabilitado != currentTag.isHabilitado())
-					tagService.actulizeHabilitations(currentTag);
 				
 				messageBox.publish("ModifyInTags");
-				
-			}
+			}	
 		} catch (CommitException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void clear() {
+
+		binder.clear();
+		binder.unbind(nombreTag);
+		binder.unbind(descripcionTag);
+		binder.unbind(habilitadoTag);
+		
 	}
 	
 

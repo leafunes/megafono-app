@@ -13,13 +13,13 @@ import data.Tag;
 import misc.MessageBox;
 import services.PrecioService;
 
-public class TagsEditPricing extends VerticalLayout{
+@SuppressWarnings("serial")
+public class TagsEditPricing extends VerticalLayout implements TagEditor{
 	
 	private TextField montoField;
 	
 	private Label currentPrice;
 	
-
 	private MessageBox messageBox;
 	private BeanFieldGroup<Precio> binder;
 	private Tag currentTag;
@@ -44,6 +44,7 @@ public class TagsEditPricing extends VerticalLayout{
 		
 	}
 	
+	@Override
 	public void editTag(Tag t){
 		
 		if(t != null){
@@ -66,6 +67,7 @@ public class TagsEditPricing extends VerticalLayout{
 		}
 	}
 	
+	@Override
 	public void commit(){
 		try {
 			if(binder != null){
@@ -85,6 +87,11 @@ public class TagsEditPricing extends VerticalLayout{
 		} catch (CommitException e) {
 			e.printStackTrace();
 		}
+		
+	}
+
+	@Override
+	public void clear() {
 		
 	}
 
