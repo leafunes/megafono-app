@@ -13,7 +13,7 @@ import data.Tag;
 import misc.MessageBox;
 import services.TagService;
 
-public class TagsEditDelete extends VerticalLayout{
+public class TagsEditDelete extends VerticalLayout implements TagEditor{
 	
 	//Fields
 	private TextField confirmText;
@@ -45,6 +45,7 @@ public class TagsEditDelete extends VerticalLayout{
 		
 		warningLabel.addStyleName("warning");
 		warningLabel.setSizeFull();
+		
 		deleteBtt.addClickListener(e -> {
 			if(currentTag != null && confirmText.getValue().equals(currentTag.getNombre())){
 				tagService.deleteTag(currentTag);
@@ -79,6 +80,19 @@ public class TagsEditDelete extends VerticalLayout{
 	public void editTag(Tag t){
 		
 		currentTag = t;
+		
+	}
+
+	@Override
+	public void clear() {
+		
+		currentTag = null;
+		
+	}
+
+	@Override
+	public void commit() {
+		
 		
 	}
 

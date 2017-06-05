@@ -13,14 +13,14 @@ import data.Tag;
 import misc.MessageBox;
 import services.PrecioService;
 
-public class TagsEditPricing extends VerticalLayout{
+@SuppressWarnings("serial")
+public class TagsEditPricing extends VerticalLayout implements TagEditor{
 	
 	private TextField leftComma;
 	private TextField rigthComma;
 	
 	private Label currentPrice;
 	
-
 	private MessageBox messageBox;
 	private BeanFieldGroup<Precio> binder;
 	private Tag currentTag;
@@ -48,6 +48,7 @@ public class TagsEditPricing extends VerticalLayout{
 		
 	}
 	
+	@Override
 	public void editTag(Tag t){
 		
 		Precio precio = precioService.getCurrentPriceOf(t);
@@ -61,6 +62,7 @@ public class TagsEditPricing extends VerticalLayout{
 		binder.bind(rigthComma, "rigthComma");
 	}
 	
+	@Override
 	public void commit(){
 		
 		try {
@@ -81,6 +83,11 @@ public class TagsEditPricing extends VerticalLayout{
 		} catch (CommitException e) {
 			e.printStackTrace();
 		}
+		
+	}
+
+	@Override
+	public void clear() {
 		
 	}
 

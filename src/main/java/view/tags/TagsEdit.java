@@ -49,7 +49,7 @@ public class TagsEdit extends Panel{
 		Button okBtt = new Button("OK");
 		okBtt.addClickListener(event -> {
 			editDescripcion.commit();
-
+			
 		});
 		
 		okBtt.setWidth(100, Unit.PERCENTAGE);
@@ -61,7 +61,8 @@ public class TagsEdit extends Panel{
 		messageBox.suscribirse("TagDeleted", () -> cancelBtt.click());
 		
 		cancelBtt.addClickListener(event -> {
-			editDescripcion.editTag(null);
+			editDescripcion.clear();
+			editDelete.clear();
 			messageBox.publish("CancelButtonTag");
 			
 		});
