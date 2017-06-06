@@ -54,9 +54,9 @@ public class TagsEditDescripcion extends VerticalLayout implements TagEditor{
 	@Override
 	public void editTag (Tag t){
 		
+		if(binder == null)binder = BeanFieldGroup.bindFieldsBuffered(t, this);
+		
 		currentTag = t;
-
-		binder = BeanFieldGroup.bindFieldsBuffered(currentTag, this);
 		
 		binder.bind(nombreTag, "nombre");
 		binder.bind(descripcionTag, "descripcion");
@@ -67,14 +67,13 @@ public class TagsEditDescripcion extends VerticalLayout implements TagEditor{
 	public void commit(){
 			
 		try{ 
-			if(binder != null){
-				
-				binder.commit();
-				tagService.actulizeHabilitations(currentTag);
-				tagService.addTag(currentTag);
-				
-				messageBox.publish("ModifyInTags");
-			}	
+
+			tagService.actulizeHabilitations(currentTag);
+			binder.commit();
+			tagService.addTag(currentTag);
+			
+			messageBox.publish("ModifyInTags");
+			
 		} catch (CommitException e) {
 			e.printStackTrace();
 		}

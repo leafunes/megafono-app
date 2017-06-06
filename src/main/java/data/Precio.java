@@ -17,7 +17,9 @@ public class Precio {
 	private Object objetoValuable;
 
 	public Precio() {
-		
+		monto = new BigDecimal("0.0");
+		current = true;
+		fechaCreacion = DateTime.now();
 	}
 
 	public DateTime getFechaFin() {

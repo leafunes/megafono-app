@@ -23,7 +23,7 @@ public class TagsEditPricing extends VerticalLayout implements TagEditor{
 	private MessageBox messageBox;
 	private BeanFieldGroup<Precio> binder;
 	private Tag currentTag;
-	private Precio newPrecio;
+	private Precio nuevoPrecio;
 	
 	private PrecioService precioService;
 	
@@ -31,9 +31,6 @@ public class TagsEditPricing extends VerticalLayout implements TagEditor{
 		
 		precioService = PrecioService.getService();
 		messageBox = MessageBox.getMessageBox();
-		
-		newPrecio = new Precio();
-		newPrecio.setMonto("0.0");
 		
 		montoField = new TextField();
 		
@@ -47,43 +44,31 @@ public class TagsEditPricing extends VerticalLayout implements TagEditor{
 	@Override
 	public void editTag(Tag t){
 		
-		if(t != null){
-			
-			Precio precio = precioService.getCurrentPriceOf(t);
-			if(precio != null)currentPrice.setValue(precio.getMonto().toPlainString());
-			else currentPrice.setValue("0.0");
-			
-			currentTag = t;
-			newPrecio.setObjetoValuable(t);
-			
-			binder = BeanFieldGroup.bindFieldsBuffered(newPrecio, this);
-			binder.bind(montoField, "monto");
-		}
-		else{
-			
-			montoField.setValue("0.0");
-			currentPrice.setValue("0.0");
-			
-		}
+		currentPrice.setValue(precioService.getCurrentPriceOf(t).getMonto().toPlainString());
+
+		currentTag = t;
+		nuevoPrecio = new Precio();
+		nuevoPrecio.setObjetoValuable(t);
+		
+		if(binder == null) binder = BeanFieldGroup.bindFieldsBuffered(nuevoPrecio, this);
+		binder.bind(montoField, "monto");
+		
 	}
 	
 	@Override
 	public void commit(){
 		try {
-			if(binder != null){
 				
-				binder.commit();
-				
-				newPrecio.setCurrent(true);
-				newPrecio.setFechaCreacion(DateTime.now());
-				
-				precioService.actualizePrices(currentTag);
-				
-				precioService.addPrecio(newPrecio);
-				
-				messageBox.publish("ModifyInTags");
-				
-			}
+			binder.commit();
+			
+			precioService.actualizePrices(currentTag);
+			
+			precioService.addPrecio(nuevoPrecio);
+			
+			currentPrice.setValue(nuevoPrecio.getMonto().toPlainString());
+			
+			messageBox.publish("ModifyInTags");
+			
 		} catch (CommitException e) {
 			e.printStackTrace();
 		}
@@ -92,6 +77,11 @@ public class TagsEditPricing extends VerticalLayout implements TagEditor{
 
 	@Override
 	public void clear() {
+		
+		binder.clear();
+		binder.unbind(montoField);
+		montoField.setValue("0.0");
+		currentPrice.setValue("0.0");
 		
 	}
 

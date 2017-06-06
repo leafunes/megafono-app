@@ -3,14 +3,18 @@ package services;
 import java.util.ArrayList;
 import java.util.List;
 
+import daos.iface.DAOPrecio;
 import daos.iface.DAOTag;
+import daos.impl.DAOPrecioNeodatis;
 import daos.impl.DAOTagNeodatis;
+import data.Precio;
 import data.Tag;
 
 public class TagService {
 	
 	private static TagService singleton;
 	private DAOTag daoTag;
+	private DAOPrecio daoPrecio;
 	
 	public static TagService getService(){
 		if(singleton == null)
@@ -21,6 +25,7 @@ public class TagService {
 	private TagService(){
 		
 		daoTag = new DAOTagNeodatis();
+		daoPrecio = new DAOPrecioNeodatis();
 		
 	}
 	
@@ -31,6 +36,16 @@ public class TagService {
 	}
 	
 	public void addTag(Tag t){
+		
+		Precio p = daoPrecio.getCurrentPriceOf(t);
+		
+		if(p == null){
+			Precio primerPrecio = new Precio();
+			primerPrecio.setObjetoValuable(t);
+			
+			daoPrecio.save(primerPrecio);
+		}
+		
 		daoTag.save(t);
 		
 	}
