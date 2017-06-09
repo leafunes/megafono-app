@@ -79,17 +79,13 @@ public class TagService {
 
 	public void actulizeHabilitations(Tag tag) {
 		
-		Tag oldTag = daoTag.getTagByName(tag.getNombre());
+		List<Tag> childrensOf = daoTag.getChildrenOf(tag);
 		
-		if(oldTag.isHabilitado() != tag.isHabilitado()){
-			List<Tag> childrensOf = daoTag.getChildrenOf(tag);
-			
-			childrensOf.forEach(t -> t.setHabilitado(tag.isHabilitado()));
-			
-			childrensOf.forEach(t -> actulizeHabilitations(t));
-			
-			daoTag.saveAll(childrensOf);
-		}
+		childrensOf.forEach(t -> t.setHabilitado(tag.isHabilitado()));
+		
+		childrensOf.forEach(t -> actulizeHabilitations(t));
+		
+		daoTag.saveAll(childrensOf);
 		
 	}
 	
