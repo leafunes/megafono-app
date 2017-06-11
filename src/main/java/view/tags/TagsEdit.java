@@ -83,11 +83,10 @@ public class TagsEdit extends Panel{
 		mainLayout.addComponent(tabs, 0, 0 , 5, 0);
 		mainLayout.addComponent(okBtt, 1, 1);
 		mainLayout.addComponent(cancelBtt, 4, 1);
-		mainLayout.setSizeFull();
 		mainLayout.setComponentAlignment(okBtt, Alignment.BOTTOM_CENTER);
 		mainLayout.setComponentAlignment(cancelBtt, Alignment.BOTTOM_CENTER);
 		
-		mainLayout.setRowExpandRatio(0, 5);
+		mainLayout.setRowExpandRatio(0, 9);
 		mainLayout.setRowExpandRatio(1, 1);
 		mainLayout.setSpacing(true);
 		

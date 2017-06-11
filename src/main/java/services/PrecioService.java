@@ -43,7 +43,7 @@ public class PrecioService {
 		
 		Precio currentPrice = daoPrecio.getCurrentPriceOf(tag);
 		
-		if(p.getMonto().longValueExact() != currentPrice.getMonto().longValueExact()){
+		if(!p.getMonto().equals(currentPrice.getMonto())){
 			
 			p.setFechaCreacion(DateTime.now());
 			
