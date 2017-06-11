@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -8,6 +9,7 @@ import daos.iface.DAOPrecio;
 import daos.impl.DAOPrecioNeodatis;
 import data.Precio;
 import data.Tag;
+import dtos.PrecioDTO;
 
 public class PrecioService {
 	
@@ -55,8 +57,13 @@ public class PrecioService {
 		
 	}
 
-	public List<Precio> getHistoricalPricesOf(Tag t) {
-		return daoPrecio.getAllPricesOf(t);
+	public List<PrecioDTO> getHistoricalPricesOf(Tag t) {
+		
+		List<PrecioDTO> toReturn = new ArrayList<>();
+		
+		daoPrecio.getAllPricesOf(t).forEach(p -> toReturn.add(new PrecioDTO(p)));
+		
+		return toReturn;
 	}
 
 }

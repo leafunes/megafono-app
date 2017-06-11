@@ -1,5 +1,6 @@
 package view.tags;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -14,6 +15,7 @@ import com.vaadin.ui.VerticalLayout;
 
 import data.Precio;
 import data.Tag;
+import dtos.PrecioDTO;
 import misc.MessageBox;
 import services.PrecioService;
 
@@ -29,6 +31,9 @@ public class TagsEditPricing extends VerticalLayout implements TagEditor{
 	private Tag currentTag;
 	private Precio nuevoPrecio;
 	
+	private List<PrecioDTO> precios;
+	private BeanItemContainer<PrecioDTO> container;
+	
 	private PrecioService precioService;
 	
 	public TagsEditPricing() {
@@ -39,6 +44,17 @@ public class TagsEditPricing extends VerticalLayout implements TagEditor{
 		montoField = new TextField();
 		
 		currentPrice = new Label();
+		
+		precios = new ArrayList<>();
+		container = new BeanItemContainer<>(PrecioDTO.class, precios);
+		
+		Grid grid = new Grid(container);
+		grid.setColumns("monto", "fechaCreacion", "fechaFin");
+		grid.getColumn("monto").setHeaderCaption("Monto");
+		grid.getColumn("fechaCreacion").setHeaderCaption("Fecha de Creacion");
+		grid.getColumn("fechaFin").setHeaderCaption("Fecha de Fin");
+
+		addComponent(grid);
 		
 		addComponent(montoField);
 		addComponent(currentPrice);
@@ -63,7 +79,10 @@ public class TagsEditPricing extends VerticalLayout implements TagEditor{
 		
 		binder = BeanFieldGroup.bindFieldsBuffered(nuevoPrecio, this);
 		binder.bind(montoField, "monto");
-
+		
+		precios = precioService.getHistoricalPricesOf(t);
+		container.removeAllItems();
+		container.addAll(precios);
 		
 	}
 	
