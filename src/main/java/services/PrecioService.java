@@ -1,5 +1,7 @@
 package services;
 
+import java.util.List;
+
 import org.joda.time.DateTime;
 
 import daos.iface.DAOPrecio;
@@ -35,17 +37,26 @@ public class PrecioService {
 		daoPrecio.save(p);
 	}
 
-	public void actualizePrices(Tag tag) {
+	public void actualizePrices(Tag tag, Precio p) {
 		
-		Precio toActualize = getCurrentPriceOf(tag);
+		Precio currentPrice = daoPrecio.getCurrentPriceOf(tag);
 		
-		if(toActualize != null){
-			toActualize.setFechaFin(DateTime.now());
-			toActualize.setCurrent(false);
+		if(p.getMonto().longValueExact() != currentPrice.getMonto().longValueExact()){
 			
-			daoPrecio.save(toActualize);
+			p.setFechaCreacion(DateTime.now());
+			
+			currentPrice.setFechaFin(DateTime.now());
+			currentPrice.setCurrent(false);
+			
+			daoPrecio.save(currentPrice);
+			daoPrecio.save(p);
+			
 		}
 		
+	}
+
+	public List<Precio> getHistoricalPricesOf(Tag t) {
+		return daoPrecio.getAllPricesOf(t);
 	}
 
 }

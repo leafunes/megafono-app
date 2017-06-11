@@ -2,13 +2,14 @@ package data;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.joda.time.DateTime;
 
 public class Precio {
 	
-	private DateTime fechaFin;
-	private DateTime fechaCreacion;
+	private Date fechaFin;
+	private Date fechaCreacion;
 	
 	private BigDecimal monto;
 	
@@ -17,25 +18,25 @@ public class Precio {
 	private Object objetoValuable;
 
 	public Precio() {
-		monto = new BigDecimal("0.0");
+		monto = new BigDecimal("0");
 		current = true;
-		fechaCreacion = DateTime.now();
+		fechaCreacion = new Date(); //now
 	}
 
 	public DateTime getFechaFin() {
-		return fechaFin;
+		return new DateTime(fechaFin);
 	}
 
 	public void setFechaFin(DateTime fechaFin) {
-		this.fechaFin = fechaFin;
+		this.fechaFin = new Date(fechaFin.getMillis());//fechaFin.getMillis();
 	}
 
 	public DateTime getFechaCreacion() {
-		return fechaCreacion;
+		return new DateTime(fechaCreacion);
 	}
 
 	public void setFechaCreacion(DateTime fechaCreacion) {
-		this.fechaCreacion = fechaCreacion;
+		this.fechaCreacion = new Date(fechaCreacion.getMillis());//fechaCreacion.getMillis();
 	}
 
 	public Object getObjetoValuable() {

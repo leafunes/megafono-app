@@ -73,7 +73,7 @@ public class TagsEditDescripcion extends VerticalLayout implements TagEditor{
 			if(habilitadoOld != currentTag.isHabilitado())
 				tagService.actulizeHabilitations(currentTag);
 			
-			tagService.addTag(currentTag);
+			tagService.actualizeTag(currentTag);
 			
 			messageBox.publish("ModifyInTags");
 			

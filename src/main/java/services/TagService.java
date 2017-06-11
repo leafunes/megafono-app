@@ -35,16 +35,17 @@ public class TagService {
 		
 	}
 	
-	public void addTag(Tag t){
+	public void actualizeTag(Tag t){
+		daoTag.save(t);
+	}
+	
+	public void createTag(Tag t){
 		
-		Precio p = daoPrecio.getCurrentPriceOf(t);
+		System.out.println("preico nulo de " + t.getNombre());
+		Precio primerPrecio = new Precio();
+		primerPrecio.setObjetoValuable(t);
 		
-		if(p == null){
-			Precio primerPrecio = new Precio();
-			primerPrecio.setObjetoValuable(t);
-			
-			daoPrecio.save(primerPrecio);
-		}
+		daoPrecio.save(primerPrecio);
 		
 		daoTag.save(t);
 		

@@ -123,7 +123,7 @@ public class TagsTree extends Panel{
 	
 	public void addTag(String name){
 		
-		tagService.addTag(new Tag(name, tagSelected));
+		tagService.createTag(new Tag(name, tagSelected));
 
 		tagsTree.addItem(name);
 		tagsTree.setChildrenAllowed(name, false);

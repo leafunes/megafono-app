@@ -1,9 +1,13 @@
 package view.tags;
 
+import java.util.List;
+
 import org.joda.time.DateTime;
 
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
+import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.ui.Grid;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -39,35 +43,35 @@ public class TagsEditPricing extends VerticalLayout implements TagEditor{
 		addComponent(montoField);
 		addComponent(currentPrice);
 		
+		
+
+		
+		
 	}
 	
 	@Override
 	public void editTag(Tag t){
-		
-		currentPrice.setValue(precioService.getCurrentPriceOf(t).getMonto().toPlainString());
 
 		currentTag = t;
 		nuevoPrecio = new Precio();
+		Precio anteriorPrecio = precioService.getCurrentPriceOf(t);
+		
+		currentPrice.setValue(anteriorPrecio.getMonto().toPlainString());
+		
+		nuevoPrecio.setMonto(anteriorPrecio.getMonto().toPlainString());
 		nuevoPrecio.setObjetoValuable(t);
 		
-		if(binder == null) binder = BeanFieldGroup.bindFieldsBuffered(nuevoPrecio, this);
+		binder = BeanFieldGroup.bindFieldsBuffered(nuevoPrecio, this);
 		binder.bind(montoField, "monto");
+
 		
 	}
 	
 	@Override
 	public void commit(){
 		try {
-				
 			binder.commit();
-			
-			precioService.actualizePrices(currentTag);
-			
-			precioService.addPrecio(nuevoPrecio);
-			
-			currentPrice.setValue(nuevoPrecio.getMonto().toPlainString());
-			
-			messageBox.publish("ModifyInTags");
+			precioService.actualizePrices(currentTag, nuevoPrecio);
 			
 		} catch (CommitException e) {
 			e.printStackTrace();
