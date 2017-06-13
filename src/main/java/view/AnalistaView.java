@@ -15,7 +15,7 @@ import com.vaadin.ui.VerticalLayout;
 import view.tags.TagsPanel;
 
 
-public class MainView extends VerticalLayout implements View{
+public class AnalistaView extends VerticalLayout{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -28,7 +28,7 @@ public class MainView extends VerticalLayout implements View{
 	private Panel mainPanel;
 	
 	
-	public MainView() {
+	public AnalistaView() {
 
 		setSizeFull();
 		init();
@@ -50,7 +50,7 @@ public class MainView extends VerticalLayout implements View{
 	}
 	
 	private void initMenu(){
-		MenuTree menu = new MenuTree();
+		MenuAnalistaTree menu = new MenuAnalistaTree();
 		menuPanel = new Panel();
 		
 		menu.setSizeFull();
@@ -91,12 +91,6 @@ public class MainView extends VerticalLayout implements View{
 		
 		nav.addView("", new WelcomePanel());
 		nav.addView(TagsPanel.NAME, new TagsPanel());
-	}
-
-	@Override
-	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

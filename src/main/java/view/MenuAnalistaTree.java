@@ -8,7 +8,7 @@ import com.vaadin.ui.Tree;
 
 import view.tags.TagsPanel;
 
-public class MenuTree extends Tree{
+public class MenuAnalistaTree extends Tree{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -18,7 +18,7 @@ public class MenuTree extends Tree{
 	private String reportingLbl = "Reporting";
 	private String wesaLbl = "Wesa";
 	
-	public MenuTree() {
+	public MenuAnalistaTree() {
 		
 		addItem(gestionLbl);
 		/**/addItem(tagsLbl);

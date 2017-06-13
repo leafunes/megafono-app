@@ -75,7 +75,7 @@ public class LoginView extends VerticalLayout{
 				if(username.isValid() && !username.getValue().isEmpty() &&
 						password.isValid() && !password.getValue().isEmpty()){
 					if(usuarioService.loginUsuario(username.getValue(), password.getValue())){
-						MainView view = new MainView();
+						AnalistaView view = new AnalistaView();
 						getUI().setContent(view);
 						view.initNavigator();
 					}
@@ -96,7 +96,7 @@ public class LoginView extends VerticalLayout{
 					if(!usuarioService.isUsernameInUse(username.getValue())){
 						usuarioService.altaUsuario(username.getValue(), password.getValue(), "cliente");
 						
-						getUI().setContent(new MainView());
+						getUI().setContent(new AnalistaView());
 					}
 					
 					else

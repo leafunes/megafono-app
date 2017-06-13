@@ -26,8 +26,11 @@ public class MyUI extends UI {
 		setContent(login);
     	*/
 		
-    	MainView mainView = new MainView();
-    	setContent(mainView);
+    	/*AnalistaView mainView = new AnalistaView();
+    	setContent(mainView);*/
+		
+		ClienteView mainView = new ClienteView();
+		setContent(mainView);
     	
     	mainView.initNavigator();
     	
