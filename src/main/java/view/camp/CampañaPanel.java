@@ -78,6 +78,10 @@ public class CampañaPanel extends Panel implements View{
 			navigable.setContent(pages.get(nameOfNextView));
 			currentPageIndex++;
 		}
+		else{
+			pages.forEach((k, v) -> v.commit());
+			pages.forEach((k, v) -> v.clear());
+		}
 		
 	}
 
