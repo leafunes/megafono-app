@@ -97,6 +97,11 @@ public class TagsEditPricing extends VerticalLayout implements TagEditor{
 		nuevoPrecio.setObjetoValuable(currentTag);
 	}
 	
+	private void bind(){
+		binder = BeanFieldGroup.bindFieldsBuffered(nuevoPrecio, this);
+		binder.bind(nuevoPrecioMonto, "monto");
+	}
+	
 	@Override
 	public void editTag(Tag t){
 	
@@ -108,9 +113,7 @@ public class TagsEditPricing extends VerticalLayout implements TagEditor{
 		
 		nuevoPrecioMonto.setValue(nuevoPrecio.getMonto().toPlainString());
 		
-		binder = BeanFieldGroup.bindFieldsBuffered(nuevoPrecio, this);
-		binder.bind(nuevoPrecioMonto, "monto");
-		
+		bind();
 		actualizeContainer();
 	}
 	
@@ -122,6 +125,7 @@ public class TagsEditPricing extends VerticalLayout implements TagEditor{
 				precioService.actualizePrices(currentTag, nuevoPrecio);
 				actualizeContainer();
 				createNewPrice();
+				bind();
 			}
 		} catch (CommitException e) {
 			e.printStackTrace();
