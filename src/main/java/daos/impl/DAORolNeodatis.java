@@ -17,8 +17,8 @@ public class DAORolNeodatis extends DAONeodatis<Rol> implements DAORol{
 	public DAORolNeodatis() {
 		db = new ArrayList<Rol>();
 		
-		Rol rolCliente = new Rol("cliente", "Gestion de campañas, agregar tags a campañas, agregar "
-				+ "acciones publicitarias a campañas");
+		Rol rolCliente = new Rol("cliente", "Gestion de campanias, agregar tags a campanias, agregar "
+				+ "acciones publicitarias a campanias");
 		
 		rolCliente.addPermiso(new Permiso("permiso cliente", ""));
 		

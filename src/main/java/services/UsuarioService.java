@@ -63,6 +63,10 @@ public class UsuarioService {
 		
 	}
 	
+	public Usuario getLoggedUser(){
+		return logedUser;
+	}
+	
 	private String getMd5Of(String s){
 		
 		MessageDigest m;

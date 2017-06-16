@@ -8,47 +8,54 @@ import com.vaadin.ui.Tree;
 
 import misc.MessageBox;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import view.camp.CampañaEditDescripcion;
-import view.camp.CampañaPanel;
+import view.camp.CampaniaEditDescripcion;
+import view.camp.CampaniaPanel;
+import view.camp.CampaniaViewer;
 import view.tags.TagsPanel;
 
 public class MenuClienteTree extends Tree{
 	
-	private String campañasLbl = "Campañas";
-	private String crearCampLbl = "Crear";
-	private String verCampLbl = "Ver";
+	private final String campaniasLbl = "Campañas";
+	private final String crearCampLbl = "Crear";
+	private final String verCampLbl = "Ver";
 	
 	private MessageBox msgBox = MessageBox.getMessageBox();
 	
 	public MenuClienteTree() {
 		
-		addItem(campañasLbl);
+		addItem(campaniasLbl);
 		/**/addItem(crearCampLbl);
 		/**/addItem(verCampLbl);
 	
 		setChildrenAllowed(crearCampLbl, false);
 		setChildrenAllowed(verCampLbl, false);
 		
-		setParent(crearCampLbl, campañasLbl);
-		setParent(verCampLbl, campañasLbl);
+		setParent(crearCampLbl, campaniasLbl);
+		setParent(verCampLbl, campaniasLbl);
 		
-		addItemClickListener(new ItemClickListener() {
-			private static final long serialVersionUID = 1L;
 
-			@Override
-			public void itemClick(ItemClickEvent event) {
+		
+		addItemClickListener( e -> {
+			if (e.getButton() == MouseButton.LEFT){
+
 				Navigator nav = getUI().getNavigator();
-				if (event.getButton() == MouseButton.LEFT){
-					String ID = (String)event.getItemId();
+				switch ((String)e.getItemId()) {
+				case crearCampLbl:
+					nav.navigateTo(CampaniaPanel.NAME);
+					msgBox.publish("CreateNewCamp");
+					break;
 					
-					if(ID == crearCampLbl){
-						nav.navigateTo(CampañaPanel.NAME);
-						msgBox.publish("CreateNewCamp");
-					}
-					
+				case verCampLbl:
+					nav.navigateTo(CampaniaViewer.NAME);
+
+				default:
+					break;
 				}
 				
+				
+				
 			}
+			
 		});
 
 	}

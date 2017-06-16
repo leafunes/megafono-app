@@ -2,13 +2,13 @@ package view.camp;
 
 import com.vaadin.ui.Component;
 
-import data.Campaña;
+import data.Campania;
 import data.Tag;
 
-public interface CampañaEditor extends Component{
+public interface CampaniaEditor extends Component{
 
 	
-	public void editCampaña(Campaña c);
+	public void editCampania(Campania c);
 	public void clear();
 	public void commit();
 

@@ -49,7 +49,7 @@ public class LoginView extends VerticalLayout{
 	private void init(){
 		
 		username = new TextField("Mail");
-		password = new PasswordField("Contraseña");
+		password = new PasswordField("Contrasenia");
 		loginButton = new Button("Login");
 		regisButton = new Button("Registrarse");
 		
@@ -65,7 +65,7 @@ public class LoginView extends VerticalLayout{
 		//password.setBuffered(true);
 		password.setNullSettingAllowed(true);
 		password.setNullRepresentation("");
-		password.addValidator(new NullValidator("Debe ingresar una contraseña", false));
+		password.addValidator(new NullValidator("Debe ingresar una contrasenia", false));
 		
 		loginButton.addClickListener(new ClickListener() {
 			

@@ -15,7 +15,7 @@ public class AccionPublicitaria {
 	private String remitente;
 	private String remitentePsw;
 	
-	private Campaña camp;
+	private Campania camp;
 	private Tag tag;
 	
 	public AccionPublicitaria(String destinatario, String remitente, String remitentePsw) {
@@ -64,11 +64,11 @@ public class AccionPublicitaria {
 		this.ultimaEjecucion = ultimaEjecucion;
 	}
 
-	public Campaña getCamp() {
+	public Campania getCamp() {
 		return camp;
 	}
 
-	public void setCamp(Campaña camp) {
+	public void setCamp(Campania camp) {
 		this.camp = camp;
 	}
 	

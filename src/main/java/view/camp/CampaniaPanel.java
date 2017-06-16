@@ -16,29 +16,29 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
-import data.Campaña;
+import data.Campania;
 import misc.MessageBox;
 import misc.Procedure;
 
-public class CampañaPanel extends Panel implements View{
+public class CampaniaPanel extends Panel implements View{
 
 	public static final String NAME = "CampPanel";
 	
-	private HashMap<String, CampañaEditor> pages;
+	private HashMap<String, CampaniaEditor> pages;
 	private List<String> pagesOrder;
 	private Panel navigable;
 	private VerticalLayout mainLayout;
 	private Button nextBtt;
 	
-	private Campaña currentCampaña;
+	private Campania currentCampania;
 	
 	private int currentPageIndex;
 	private MessageBox msgBox = MessageBox.getMessageBox();
 	
-	public CampañaPanel() {
+	public CampaniaPanel() {
 		
 		super("Crear Campaña");
-		msgBox.suscribirse("CreateNewCamp", this::createCampaña);
+		msgBox.suscribirse("CreateNewCamp", () -> createCampania());
 		
 		initPages();
 		
@@ -59,15 +59,15 @@ public class CampañaPanel extends Panel implements View{
 		setContent(mainLayout);
 	}
 
-	private void createCampaña() {
+	private void createCampania() {
 		
-		currentCampaña = new Campaña("Nueva Campaña", "");
-		editCampaña(currentCampaña);
+		currentCampania = new Campania("Nueva Campaña", "");
+		editCampania(currentCampania);
 		
 	}
 
-	private void editCampaña(Campaña c) {
-		pages.forEach((k, v) -> v.editCampaña(c));
+	private void editCampania(Campania c) {
+		pages.forEach((k, v) -> v.editCampania(c));
 		
 	}
 
@@ -87,11 +87,11 @@ public class CampañaPanel extends Panel implements View{
 
 	private void initPages() {
 		pages = new HashMap<>();
-		pages.put(CampañaEditDescripcion.NAME, new CampañaEditDescripcion());
-		pages.put(CampañaEditMensaje.NAME, new CampañaEditMensaje());
+		pages.put(CampaniaEditDescripcion.NAME, new CampaniaEditDescripcion());
+		pages.put(CampaniaEditMensaje.NAME, new CampaniaEditMensaje());
 		
-		pagesOrder = Arrays.asList(CampañaEditDescripcion.NAME, 
-								CampañaEditMensaje.NAME);
+		pagesOrder = Arrays.asList(CampaniaEditDescripcion.NAME, 
+								CampaniaEditMensaje.NAME);
 		
 	}
 

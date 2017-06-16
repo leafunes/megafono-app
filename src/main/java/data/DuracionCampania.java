@@ -2,12 +2,12 @@ package data;
 
 import org.joda.time.Duration;
 
-public class DuracionCampaña {
+public class DuracionCampania {
 	
 	TipoDuracion tipo;
 	Duration duracion;
 	
-	public DuracionCampaña(TipoDuracion tipo) {
+	public DuracionCampania(TipoDuracion tipo) {
 		this.tipo = tipo;
 	}
 

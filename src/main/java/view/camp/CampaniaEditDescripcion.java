@@ -9,24 +9,24 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-import data.Campaña;
-import services.CampañaService;
+import data.Campania;
+import services.CampaniaService;
 
-public class CampañaEditDescripcion extends FormLayout implements CampañaEditor{
+public class CampaniaEditDescripcion extends FormLayout implements CampaniaEditor{
 	
 	public static final String NAME = "EditDescrCamp";
 	
 	private TextField nombre;
 	private TextArea descr;
 	
-	private Campaña currentCampaña;
+	private Campania currentCampania;
 	
-	private BeanFieldGroup<Campaña> binder;
-	private CampañaService campañaService;
+	private BeanFieldGroup<Campania> binder;
+	private CampaniaService campaniaService;
 	
-	public CampañaEditDescripcion() {
+	public CampaniaEditDescripcion() {
 		
-		campañaService = CampañaService.getService();
+		campaniaService = CampaniaService.getService();
 		
 		nombre = new TextField("Nombre: ");
 		descr = new TextArea("Descripcion: ");
@@ -38,9 +38,9 @@ public class CampañaEditDescripcion extends FormLayout implements CampañaEdito
 
 
 	@Override
-	public void editCampaña(Campaña c) {
-		currentCampaña = c;
-		binder = BeanFieldGroup.bindFieldsBuffered(currentCampaña, this);
+	public void editCampania(Campania c) {
+		currentCampania = c;
+		binder = BeanFieldGroup.bindFieldsBuffered(currentCampania, this);
 		
 		binder.bind(nombre, "nombre");
 		binder.bind(descr, "descripcion");
@@ -53,7 +53,7 @@ public class CampañaEditDescripcion extends FormLayout implements CampañaEdito
 		try {
 			
 			binder.commit();
-			campañaService.saveCampaña(currentCampaña);
+			campaniaService.saveCampania(currentCampania);
 			
 		} catch (CommitException e) {
 			e.printStackTrace();

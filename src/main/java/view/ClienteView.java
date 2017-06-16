@@ -11,8 +11,9 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-import view.camp.CampañaEditDescripcion;
-import view.camp.CampañaPanel;
+import view.camp.CampaniaEditDescripcion;
+import view.camp.CampaniaPanel;
+import view.camp.CampaniaViewer;
 import view.tags.TagsPanel;
 
 public class ClienteView extends VerticalLayout{
@@ -88,7 +89,8 @@ public class ClienteView extends VerticalLayout{
 		
 		
 		nav.addView("", new WelcomePanel());
-		nav.addView(CampañaPanel.NAME, new CampañaPanel());
+		nav.addView(CampaniaPanel.NAME, new CampaniaPanel());
+		nav.addView(CampaniaViewer.NAME, new CampaniaViewer());
 	}
 
 }

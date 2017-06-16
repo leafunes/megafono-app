@@ -2,12 +2,12 @@ package data;
 
 import java.awt.Image;
 
-public class MensajeCampaña {
+public class MensajeCampania {
 	
 	private String mensaje;
 	private Image imagen;
 	
-	public MensajeCampaña(String mensaje, Image imagen) {
+	public MensajeCampania(String mensaje, Image imagen) {
 		this.mensaje = mensaje;
 		this.imagen = imagen;
 	}

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
-public class Campaña {
+public class Campania {
 	
 	private String nombre;
 	private String descripcion;
@@ -13,11 +13,11 @@ public class Campaña {
 	private Usuario owner;
 	private List<Tag> tags;
 	
-	private MensajeCampaña mensaje;
-	private EstadoCampaña estado;
-	private DuracionCampaña duracion;
+	private MensajeCampania mensaje;
+	private EstadoCampania estado;
+	private DuracionCampania duracion;
 	
-	public Campaña(String nombre, String descripcion) {
+	public Campania(String nombre, String descripcion) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 	}
@@ -62,27 +62,27 @@ public class Campaña {
 		this.tags = tags;
 	}
 
-	public MensajeCampaña getMensaje() {
+	public MensajeCampania getMensaje() {
 		return mensaje;
 	}
 
-	public void setMensaje(MensajeCampaña mensaje) {
+	public void setMensaje(MensajeCampania mensaje) {
 		this.mensaje = mensaje;
 	}
 
-	public EstadoCampaña getEstado() {
+	public EstadoCampania getEstado() {
 		return estado;
 	}
 
-	public void setEstado(EstadoCampaña estado) {
+	public void setEstado(EstadoCampania estado) {
 		this.estado = estado;
 	}
 
-	public DuracionCampaña getDuracion() {
+	public DuracionCampania getDuracion() {
 		return duracion;
 	}
 
-	public void setDuracion(DuracionCampaña duracion) {
+	public void setDuracion(DuracionCampania duracion) {
 		this.duracion = duracion;
 	}
 	
