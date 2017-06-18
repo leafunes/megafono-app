@@ -41,7 +41,6 @@ public class TagService {
 	
 	public void createTag(Tag t){
 		
-		System.out.println("preico nulo de " + t.getNombre());
 		Precio primerPrecio = new Precio();
 		primerPrecio.setObjetoValuable(t);
 		

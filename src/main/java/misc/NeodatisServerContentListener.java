@@ -53,6 +53,8 @@ public class NeodatisServerContentListener implements ServletContextListener {
     		
     		OdbConfiguration.setReconnectObjectsToSession(true);
     		
+    		HardcodedInfo.init();
+    		
     		isOk = true;
     		
     	}

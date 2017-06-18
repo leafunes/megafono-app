@@ -6,7 +6,7 @@ import org.joda.time.Period;
 
 public class AccionPublicitaria {
 	
-	private AccionPublicitariaDescr descripcion;
+	private TipoAccionPublicitaria tipo;
 	//FIXME: ver si no hay que cambiar a milis por el tema de neodatis vs jodaTime
 	private Period periodicidad;
 	private Instant ultimaEjecucion;
@@ -40,8 +40,8 @@ public class AccionPublicitaria {
 		this.tag = tag;
 	}
 
-	public AccionPublicitariaDescr getDescripcion() {
-		return descripcion;
+	public TipoAccionPublicitaria getTipo() {
+		return tipo;
 	}
 
 	public String getDestinatario() {

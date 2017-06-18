@@ -7,7 +7,7 @@ public enum TipoAccionPublicitaria {
 	SNAPCHAT,
 	LINKEDIN,
 	TELEGRAM,
-	WHATASPP,
+	WHATSAPP,
 	TWITTER;
 
 }
