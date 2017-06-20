@@ -6,7 +6,7 @@ import java.util.Date;
 
 import org.joda.time.DateTime;
 
-public class Precio {
+public class Precio{
 	
 	private Date fechaFin;
 	private Date fechaCreacion;

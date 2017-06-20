@@ -15,6 +15,7 @@ import data.Rol;
 import data.TipoAccionPublicitaria;
 import data.Usuario;
 import data.precios.Precio;
+import data.precios.PrecioAccionPublicitaria;
 
 public class HardcodedInfo {
 	
@@ -23,6 +24,7 @@ public class HardcodedInfo {
 	
 	private static DAORol daoRol = new DAORolNeodatis();
 	private static DAOUsuario daoUsuario = new DAOUsuarioNeodatis();
+	private static DAOPrecio daoPrecio = new DAOPrecioNeodatis();
 	
 	private static final Rol cliente = new Rol("ClienteRol", "Gestion de campañas, agregar tags a campañas, agregar "
 				+ "acciones publicitarias a campañas");
@@ -43,7 +45,24 @@ public class HardcodedInfo {
 		if(!daoUsuario.existeUsuario(admin.getEmail(), admin.getMd5()))daoUsuario.save(admin);
 		
 		
+		for(TipoAccionPublicitaria t : TipoAccionPublicitaria.values()){
+			
+			if(daoPrecio.getCurrentPriceOf(t) == null){
+				PrecioAccionPublicitaria p = new PrecioAccionPublicitaria();
+				p.setCurrent(true);
+				p.setFechaCreacion(DateTime.now());
+				p.setMonto("0");
+				p.setObjetoValuable(t);
+				
+				daoPrecio.save(p);
+			}
+			
+		}
+		
 	}
+	
+
+	
 
 
 	

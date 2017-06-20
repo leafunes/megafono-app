@@ -13,10 +13,38 @@ import org.neodatis.odb.impl.core.query.criteria.CriteriaQuery;
 
 import daos.iface.DAOPrecio;
 import data.Tag;
+import data.TipoAccionPublicitaria;
 import data.precios.Precio;
+import data.precios.PrecioAccionPublicitaria;
 import data.precios.PrecioTag;
 
 public class DAOPrecioNeodatis extends DAONeodatis<Precio> implements DAOPrecio {
+	
+	@Override
+	public PrecioAccionPublicitaria getCurrentPriceOf(TipoAccionPublicitaria t){
+		IQuery query = new SimpleNativeQuery(){
+			public boolean match(PrecioAccionPublicitaria p) {
+				
+				TipoAccionPublicitaria tag = p.getObjetoValuable();
+				
+                return p.isCurrent() && t.equals(tag);
+            }
+		};
+		
+		openClient();
+		
+		Objects<PrecioAccionPublicitaria> objs = odb.getObjects(query);
+		
+		PrecioAccionPublicitaria toReturn = null;
+		if(!objs.isEmpty())
+			toReturn = objs.getFirst();
+		
+		closeClient();
+		
+		return toReturn;
+		
+		
+	}
 
 	@Override
 	public PrecioTag getCurrentPriceOf(Tag t) {
@@ -24,7 +52,7 @@ public class DAOPrecioNeodatis extends DAONeodatis<Precio> implements DAOPrecio 
 		IQuery query = new SimpleNativeQuery(){
 			public boolean match(PrecioTag p) {
 				
-				Tag tag = (Tag)p.getObjetoValuable();
+				Tag tag = p.getObjetoValuable();
 				
                 return p.isCurrent() && t.equals(tag);
             }
@@ -70,5 +98,8 @@ public class DAOPrecioNeodatis extends DAONeodatis<Precio> implements DAOPrecio 
 		return toRet;
 		
 	}
+	
+	
+	
 
 }

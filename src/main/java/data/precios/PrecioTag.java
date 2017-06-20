@@ -4,7 +4,7 @@ import data.Tag;
 
 public class PrecioTag extends Precio{
 	
-	private Tag objetoValuable;
+	Tag objetoValuable;
 	
 	public PrecioTag() {
 		
