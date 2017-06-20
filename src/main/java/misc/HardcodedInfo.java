@@ -11,10 +11,10 @@ import daos.iface.DAOUsuario;
 import daos.impl.DAOPrecioNeodatis;
 import daos.impl.DAORolNeodatis;
 import daos.impl.DAOUsuarioNeodatis;
-import data.Precio;
 import data.Rol;
 import data.TipoAccionPublicitaria;
 import data.Usuario;
+import data.precios.Precio;
 
 public class HardcodedInfo {
 	

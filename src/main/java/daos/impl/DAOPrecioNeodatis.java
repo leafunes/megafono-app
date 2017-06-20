@@ -12,16 +12,17 @@ import org.neodatis.odb.core.query.nq.SimpleNativeQuery;
 import org.neodatis.odb.impl.core.query.criteria.CriteriaQuery;
 
 import daos.iface.DAOPrecio;
-import data.Precio;
 import data.Tag;
+import data.precios.Precio;
+import data.precios.PrecioTag;
 
 public class DAOPrecioNeodatis extends DAONeodatis<Precio> implements DAOPrecio {
 
 	@Override
-	public Precio getCurrentPriceOf(Tag t) {
+	public PrecioTag getCurrentPriceOf(Tag t) {
 		
 		IQuery query = new SimpleNativeQuery(){
-			public boolean match(Precio p) {
+			public boolean match(PrecioTag p) {
 				
 				Tag tag = (Tag)p.getObjetoValuable();
 				
@@ -32,25 +33,23 @@ public class DAOPrecioNeodatis extends DAONeodatis<Precio> implements DAOPrecio 
 		
 		openClient();
 		
-		Objects<Precio> objs = odb.getObjects(query);
+		Objects<PrecioTag> objs = odb.getObjects(query);
 		
-		Precio toReturn = null;
+		PrecioTag toReturn = null;
 		if(!objs.isEmpty())
 			toReturn = objs.getFirst();
 		
 		closeClient();
 		
 		return toReturn;
-		
-		
-		
+	
 	}
 
 	@Override
-	public List<Precio> getAllPricesOf(Tag t) {
+	public List<PrecioTag> getAllPricesOf(Tag t) {
 
 		IQuery query = new SimpleNativeQuery(){
-			public boolean match(Precio p) {
+			public boolean match(PrecioTag p) {
 				
 				Tag tag = (Tag)p.getObjetoValuable();
 				
@@ -61,11 +60,11 @@ public class DAOPrecioNeodatis extends DAONeodatis<Precio> implements DAOPrecio 
 		
 		openClient();
 		
-		Objects<Precio> objs = odb.getObjects(query);
+		Objects<PrecioTag> objs = odb.getObjects(query);
 		
 		closeClient();
 		
-		List<Precio> toRet = new ArrayList<>(objs);
+		List<PrecioTag> toRet = new ArrayList<>(objs);
 		toRet.sort((p1, p2) -> p1.getFechaCreacion().compareTo(p2.getFechaCreacion()));
 		
 		return toRet;

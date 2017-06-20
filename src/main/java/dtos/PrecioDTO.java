@@ -2,7 +2,7 @@ package dtos;
 
 import java.math.BigDecimal;
 
-import data.Precio;
+import data.precios.Precio;
 
 public class PrecioDTO {
 	

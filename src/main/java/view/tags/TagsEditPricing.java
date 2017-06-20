@@ -21,8 +21,9 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
-import data.Precio;
 import data.Tag;
+import data.precios.Precio;
+import data.precios.PrecioTag;
 import dtos.PrecioDTO;
 import misc.MessageBox;
 import services.PrecioService;
@@ -37,7 +38,7 @@ public class TagsEditPricing extends VerticalLayout implements TagEditor{
 	private MessageBox messageBox;
 	private BeanFieldGroup<Precio> binder;
 	private Tag currentTag;
-	private Precio nuevoPrecio;
+	private PrecioTag nuevoPrecio;
 	
 	private BeanItemContainer<PrecioDTO> container;
 	
@@ -90,7 +91,7 @@ public class TagsEditPricing extends VerticalLayout implements TagEditor{
 	}
 	
 	private void createNewPrice(){
-		nuevoPrecio = new Precio();
+		nuevoPrecio = new PrecioTag();
 		Precio anteriorPrecio = precioService.getCurrentPriceOf(currentTag);
 		
 		nuevoPrecio.setMonto(anteriorPrecio.getMonto().toPlainString());

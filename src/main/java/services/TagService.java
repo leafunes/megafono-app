@@ -7,8 +7,9 @@ import daos.iface.DAOPrecio;
 import daos.iface.DAOTag;
 import daos.impl.DAOPrecioNeodatis;
 import daos.impl.DAOTagNeodatis;
-import data.Precio;
 import data.Tag;
+import data.precios.Precio;
+import data.precios.PrecioTag;
 
 public class TagService {
 	
@@ -41,7 +42,7 @@ public class TagService {
 	
 	public void createTag(Tag t){
 		
-		Precio primerPrecio = new Precio();
+		PrecioTag primerPrecio = new PrecioTag();
 		primerPrecio.setObjetoValuable(t);
 		
 		daoPrecio.save(primerPrecio);

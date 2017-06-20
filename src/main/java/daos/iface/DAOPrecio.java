@@ -2,13 +2,14 @@ package daos.iface;
 
 import java.util.List;
 
-import data.Precio;
 import data.Tag;
+import data.precios.Precio;
+import data.precios.PrecioTag;
 
 public interface DAOPrecio extends DAO<Precio>{
 	
-	public Precio getCurrentPriceOf(Tag o);
+	public PrecioTag getCurrentPriceOf(Tag o);
 
-	public List<Precio> getAllPricesOf(Tag t);
+	public List<PrecioTag> getAllPricesOf(Tag t);
 
 }

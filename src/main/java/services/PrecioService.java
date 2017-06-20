@@ -7,8 +7,8 @@ import org.joda.time.DateTime;
 
 import daos.iface.DAOPrecio;
 import daos.impl.DAOPrecioNeodatis;
-import data.Precio;
 import data.Tag;
+import data.precios.Precio;
 import dtos.PrecioDTO;
 
 public class PrecioService {

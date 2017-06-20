@@ -1,4 +1,4 @@
-package data;
+package data.precios;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -14,10 +14,8 @@ public class Precio {
 	private BigDecimal monto;
 	
 	private boolean current;
-	
-	private Object objetoValuable;
 
-	public Precio() {
+	protected Precio() {
 		monto = new BigDecimal("0");
 		current = true;
 		fechaCreacion = new Date(); //now
@@ -37,14 +35,6 @@ public class Precio {
 
 	public void setFechaCreacion(DateTime fechaCreacion) {
 		this.fechaCreacion = new Date(fechaCreacion.getMillis());//fechaCreacion.getMillis();
-	}
-
-	public Object getObjetoValuable() {
-		return objetoValuable;
-	}
-
-	public void setObjetoValuable(Object objetoValuable) {
-		this.objetoValuable = objetoValuable;
 	}
 
 	public boolean isCurrent() {
