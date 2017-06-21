@@ -22,11 +22,8 @@ public class CampaniaEditDescripcion extends FormLayout implements CampaniaEdito
 	private Campania currentCampania;
 	
 	private BeanFieldGroup<Campania> binder;
-	private CampaniaService campaniaService;
 	
 	public CampaniaEditDescripcion() {
-		
-		campaniaService = CampaniaService.getService();
 		
 		nombre = new TextField("Nombre: ");
 		descr = new TextArea("Descripcion: ");
@@ -53,7 +50,6 @@ public class CampaniaEditDescripcion extends FormLayout implements CampaniaEdito
 		try {
 			
 			binder.commit();
-			campaniaService.saveCampania(currentCampania);
 			
 		} catch (CommitException e) {
 			e.printStackTrace();

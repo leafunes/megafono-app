@@ -163,5 +163,8 @@ buildNumber.properties
 
 *.neodatis
 
+###Uploads###
+upload/
+
 # End of https://www.gitignore.io/api/java,maven,eclipse,intellij
 

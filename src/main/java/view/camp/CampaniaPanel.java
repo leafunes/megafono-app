@@ -19,6 +19,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import data.Campania;
 import misc.MessageBox;
 import misc.Procedure;
+import services.CampaniaService;
 
 public class CampaniaPanel extends Panel implements View{
 
@@ -34,11 +35,13 @@ public class CampaniaPanel extends Panel implements View{
 	
 	private int currentPageIndex;
 	private MessageBox msgBox = MessageBox.getMessageBox();
+	private CampaniaService campaniaService;
 	
 	public CampaniaPanel() {
 		
 		super("Crear Campaña");
 		msgBox.suscribirse("CreateNewCamp", () -> createCampania());
+		campaniaService = CampaniaService.getService();
 		
 		initPages();
 		
@@ -81,6 +84,7 @@ public class CampaniaPanel extends Panel implements View{
 		else{
 			pages.forEach((k, v) -> v.commit());
 			pages.forEach((k, v) -> v.clear());
+			campaniaService.saveCampania(currentCampania);
 		}
 		
 	}
