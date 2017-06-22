@@ -9,7 +9,9 @@ import java.util.TreeMap;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.Panel;
@@ -28,7 +30,7 @@ public class CampaniaPanel extends Panel implements View{
 	private HashMap<String, CampaniaEditor> pages;
 	private List<String> pagesOrder;
 	private Panel navigable;
-	private VerticalLayout mainLayout;
+	private GridLayout mainLayout;
 	private Button nextBtt;
 	
 	private Campania currentCampania;
@@ -40,6 +42,7 @@ public class CampaniaPanel extends Panel implements View{
 	public CampaniaPanel() {
 		
 		super("Crear Campaña");
+		setSizeFull();
 		msgBox.suscribirse("CreateNewCamp", () -> createCampania());
 		campaniaService = CampaniaService.getService();
 		
@@ -47,18 +50,20 @@ public class CampaniaPanel extends Panel implements View{
 		
 		navigable = new Panel();
 		
-		mainLayout = new VerticalLayout();
+		mainLayout = new GridLayout(4, 3);
 		
 		nextBtt = new Button("Siguiente");
 		
 		navigable.setContent(pages.get(pagesOrder.get(0)));
 		
-		mainLayout.addComponent(navigable);
-		mainLayout.addComponent(nextBtt);
-		
+		mainLayout.addComponent(navigable, 0, 0, 3, 1);
+		mainLayout.addComponent(nextBtt, 3, 2);
+		mainLayout.setSizeFull();
+		mainLayout.setComponentAlignment(nextBtt, Alignment.MIDDLE_RIGHT);
 		nextBtt.addClickListener(e -> nextPage());
 		
 		navigable.setStyleName(ValoTheme.PANEL_BORDERLESS);
+		navigable.setSizeFull();
 		setContent(mainLayout);
 	}
 
@@ -75,6 +80,9 @@ public class CampaniaPanel extends Panel implements View{
 	}
 
 	private void nextPage() {
+		
+		if(currentPageIndex == pages.size() - 1)
+			nextBtt.setCaption("Ok");
 		
 		if(currentPageIndex < pages.size() - 1){
 			String nameOfNextView = pagesOrder.get(currentPageIndex + 1);
@@ -93,9 +101,13 @@ public class CampaniaPanel extends Panel implements View{
 		pages = new HashMap<>();
 		pages.put(CampaniaEditDescripcion.NAME, new CampaniaEditDescripcion());
 		pages.put(CampaniaEditMensaje.NAME, new CampaniaEditMensaje());
+		pages.put(CampaniaEditTags.NAME, new CampaniaEditTags());
+		pages.put(CampaniaEditAciones.NAME, new CampaniaEditAciones());
 		
 		pagesOrder = Arrays.asList(CampaniaEditDescripcion.NAME, 
-								CampaniaEditMensaje.NAME);
+								CampaniaEditMensaje.NAME,
+								CampaniaEditTags.NAME,
+								CampaniaEditAciones.NAME);
 		
 	}
 

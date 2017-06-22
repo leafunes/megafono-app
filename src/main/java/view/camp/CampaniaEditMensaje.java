@@ -70,7 +70,7 @@ public class CampaniaEditMensaje extends FormLayout implements CampaniaEditor{
 			File thumb = new File(FilenameUtils.getFullPath(filePath) + 
 					"thumbnail." + FilenameUtils.getName(filePath));
 			
-			fileThumPath = thumb.getAbsolutePath();
+			fileThumPath = thumb.getPath();
 			
 			try {Thumbnails.of(filePath).size(120, 120).toFile(thumb);}
 			catch (IOException e1) {e1.printStackTrace();}

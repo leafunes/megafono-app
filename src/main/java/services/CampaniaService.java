@@ -46,7 +46,7 @@ public class CampaniaService {
 
 	public void setMensaje(Campania c, String txt, String img, String imgThumb) {
 		
-		if(c.getMensaje() == null){
+		if(c.getMensaje() != null){
 			File imagen = new File(img);
 			File thumbnail = new File(imgThumb);
 			

@@ -37,6 +37,7 @@ public class CampaniaEditDescripcion extends FormLayout implements CampaniaEdito
 	@Override
 	public void editCampania(Campania c) {
 		currentCampania = c;
+		
 		binder = BeanFieldGroup.bindFieldsBuffered(currentCampania, this);
 		
 		binder.bind(nombre, "nombre");
@@ -48,7 +49,6 @@ public class CampaniaEditDescripcion extends FormLayout implements CampaniaEdito
 	@Override
 	public void commit() {
 		try {
-			
 			binder.commit();
 			
 		} catch (CommitException e) {

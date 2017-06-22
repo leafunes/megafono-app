@@ -1,36 +1,15 @@
 package daos.impl;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.neodatis.odb.Objects;
+import org.neodatis.odb.core.query.IQuery;
+import org.neodatis.odb.core.query.criteria.Where;
+import org.neodatis.odb.impl.core.query.criteria.CriteriaQuery;
 
 import daos.iface.DAORol;
-import data.Permiso;
 import data.Rol;
 
 public class DAORolNeodatis extends DAONeodatis<Rol> implements DAORol{
 	
-	//TODO hacer neodatis
-	
-	private List<Rol> db;
-	
-	
-	public DAORolNeodatis() {
-		db = new ArrayList<Rol>();
-		
-		Rol rolCliente = new Rol("cliente", "Gestion de campanias, agregar tags a campanias, agregar "
-				+ "acciones publicitarias a campanias");
-		
-		rolCliente.addPermiso(new Permiso("permiso cliente", ""));
-		
-		Rol rolAnalista = new Rol("analista","Gestion de Tags, Gestion de acciones publicitarias "
-				+ "Gestion de precios, vista de reporting");
-		
-		rolAnalista.addPermiso(new Permiso("permiso analista", ""));
-		
-		db.add(rolCliente);
-		db.add(rolAnalista);
-		
-	}
 
 	@Override
 	public boolean existeRol(String nombre) {
@@ -41,12 +20,20 @@ public class DAORolNeodatis extends DAONeodatis<Rol> implements DAORol{
 
 	@Override
 	public Rol getRolByName(String nombre) {
-		for (Rol r : db) {
-			if(r.getNombre().equals(nombre))
-				return r;
-		}
+		IQuery query = new CriteriaQuery(Rol.class, Where.equal("nombre", nombre));
 		
-		return null;
+		Rol toReturn = null;
+		
+		openClient();
+		
+		Objects<Rol> objs = odb.getObjects(query);
+		
+		closeClient();
+		
+		if(!objs.isEmpty())
+			toReturn = objs.getFirst();
+		
+		return toReturn;
 	}
 
 }
