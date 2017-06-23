@@ -2,7 +2,7 @@ package view.camp;
 
 import java.util.Arrays;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+import com.vaadin.data.validator.NullValidator;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.GridLayout;
@@ -24,9 +24,10 @@ public class CampaniaEditAciones extends VerticalLayout implements CampaniaEdito
 		mainLayout = new GridLayout(5, 2);
 		
 		ComboBox combo = new ComboBox("Tipo: ");
-		Arrays.asList(TipoAccionPublicitaria.values()).stream().map(t -> t.toString())
-													.forEach(t -> combo.addItem(t));
-		combo.select(TipoAccionPublicitaria.MAIL);
+		Arrays.asList(TipoAccionPublicitaria.values()).forEach(t -> combo.addItem(t));
+		combo.setInvalidAllowed(false);
+		combo.setNullSelectionAllowed(false);
+		
 		
 		mainLayout.addComponent(combo, 2, 1);
 		mainLayout.addComponent(new TextField(), 3, 1);
@@ -52,6 +53,11 @@ public class CampaniaEditAciones extends VerticalLayout implements CampaniaEdito
 	public void commit() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean isValid() {
+		return true;
 	}
 	
 	

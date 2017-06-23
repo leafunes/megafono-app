@@ -1,8 +1,5 @@
 package misc;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-
 import org.joda.time.DateTime;
 
 import daos.iface.DAOPrecio;
@@ -11,10 +8,10 @@ import daos.iface.DAOUsuario;
 import daos.impl.DAOPrecioNeodatis;
 import daos.impl.DAORolNeodatis;
 import daos.impl.DAOUsuarioNeodatis;
+
 import data.Rol;
 import data.TipoAccionPublicitaria;
 import data.Usuario;
-import data.precios.Precio;
 import data.precios.PrecioAccionPublicitaria;
 
 public class HardcodedInfo {
@@ -62,9 +59,5 @@ public class HardcodedInfo {
 	}
 	
 
-	
-
-
-	
 
 }

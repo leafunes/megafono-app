@@ -26,10 +26,10 @@ public class MyUI extends UI {
 		setContent(login);
     	*/
 		
-    	//AnalistaView mainView = new AnalistaView();
+    	AnalistaView mainView = new AnalistaView();
     	//setContent(mainView);
 		
-		ClienteView mainView = new ClienteView();
+		//ClienteView mainView = new ClienteView();
 		setContent(mainView);
     	
     	mainView.initNavigator();

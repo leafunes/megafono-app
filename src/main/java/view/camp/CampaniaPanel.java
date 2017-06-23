@@ -80,20 +80,24 @@ public class CampaniaPanel extends Panel implements View{
 	}
 
 	private void nextPage() {
-		
+	
+		String nameOfCurrentView = pagesOrder.get(currentPageIndex);
+		CampaniaEditor currentEditor = pages.get(nameOfCurrentView);
+		if(currentEditor.isValid()){
+			if(currentPageIndex < pages.size() - 1){
+				String nameOfNextView = pagesOrder.get(currentPageIndex + 1);
+				navigable.setContent(pages.get(nameOfNextView));
+				currentPageIndex++;
+			}
+			else{
+				pages.forEach((k, v) -> v.commit());
+				pages.forEach((k, v) -> v.clear());
+				campaniaService.saveCampania(currentCampania);
+			}
+		}
+
 		if(currentPageIndex == pages.size() - 1)
 			nextBtt.setCaption("Ok");
-		
-		if(currentPageIndex < pages.size() - 1){
-			String nameOfNextView = pagesOrder.get(currentPageIndex + 1);
-			navigable.setContent(pages.get(nameOfNextView));
-			currentPageIndex++;
-		}
-		else{
-			pages.forEach((k, v) -> v.commit());
-			pages.forEach((k, v) -> v.clear());
-			campaniaService.saveCampania(currentCampania);
-		}
 		
 	}
 
@@ -103,8 +107,10 @@ public class CampaniaPanel extends Panel implements View{
 		pages.put(CampaniaEditMensaje.NAME, new CampaniaEditMensaje());
 		pages.put(CampaniaEditTags.NAME, new CampaniaEditTags());
 		pages.put(CampaniaEditAciones.NAME, new CampaniaEditAciones());
+		pages.put(CampaniaEditDuration.NAME, new CampaniaEditDuration());
 		
-		pagesOrder = Arrays.asList(CampaniaEditDescripcion.NAME, 
+		pagesOrder = Arrays.asList(CampaniaEditDescripcion.NAME,
+								CampaniaEditDuration.NAME,
 								CampaniaEditMensaje.NAME,
 								CampaniaEditTags.NAME,
 								CampaniaEditAciones.NAME);

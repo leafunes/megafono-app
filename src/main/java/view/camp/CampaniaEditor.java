@@ -11,6 +11,8 @@ public interface CampaniaEditor extends Component{
 	public void editCampania(Campania c);
 	public void clear();
 	public void commit();
+	
+	public boolean isValid();
 
 	
 }

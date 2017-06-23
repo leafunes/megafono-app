@@ -105,4 +105,9 @@ public class CampaniaEditMensaje extends FormLayout implements CampaniaEditor{
 		
 	}
 
+	@Override
+	public boolean isValid() {
+		return true;
+	}
+
 }

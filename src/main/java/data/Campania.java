@@ -1,5 +1,6 @@
 package data;
 
+import java.util.Date;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -8,14 +9,14 @@ public class Campania {
 	
 	private String nombre;
 	private String descripcion;
-	private DateTime inicio;
+	private Date inicio;
 	
 	private Usuario owner;
 	private List<Tag> tags;
 	
 	private MensajeCampania mensaje;
 	private EstadoCampania estado;
-	private DuracionCampania duracion;
+	private TipoDuracion duracion;
 	
 	public Campania(String nombre, String descripcion) {
 		this.nombre = nombre;
@@ -39,11 +40,11 @@ public class Campania {
 	}
 
 	public DateTime getInicio() {
-		return inicio;
+		return new DateTime(inicio);
 	}
 
 	public void setInicio(DateTime inicio) {
-		this.inicio = inicio;
+		this.inicio = inicio.toDate();
 	}
 
 	public Usuario getOwner() {
@@ -78,11 +79,11 @@ public class Campania {
 		this.estado = estado;
 	}
 
-	public DuracionCampania getDuracion() {
+	public TipoDuracion getDuracion() {
 		return duracion;
 	}
 
-	public void setDuracion(DuracionCampania duracion) {
+	public void setDuracion(TipoDuracion duracion) {
 		this.duracion = duracion;
 	}
 	

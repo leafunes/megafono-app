@@ -65,6 +65,12 @@ public class CampaniaEditDescripcion extends FormLayout implements CampaniaEdito
 	}
 
 
+	@Override
+	public boolean isValid() {
+		return true;
+	}
+
+
 
 
 }

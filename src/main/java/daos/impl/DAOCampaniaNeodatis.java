@@ -34,6 +34,12 @@ public class DAOCampaniaNeodatis extends DAONeodatis<Campania> implements DAOCam
 		
 	}
 
+	@Override
+	public List<Campania> getAllActiveCampanias() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	
 	

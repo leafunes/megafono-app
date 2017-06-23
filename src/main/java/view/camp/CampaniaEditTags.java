@@ -1,6 +1,8 @@
 package view.camp;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -111,8 +113,15 @@ public class CampaniaEditTags extends VerticalLayout implements CampaniaEditor{
 	
 	private void moveItem(TreeTable from, TreeTable to, Object id){
 		
-		if(from.hasChildren(id))
-			from.getChildren(id).forEach(child -> moveItem(from, to, child));
+		
+		if(from.hasChildren(id)){
+			
+			//Hay que hacer esto para no ir modificando los hijos a medida que se sacan los objetos
+			Object[] noModificableArray = from.getChildren(id).toArray();
+			
+			Arrays.asList(noModificableArray).forEach(child -> moveItem(from, to, child));
+			
+		}
 		
 		to.addItem(getTagToTable(allTags.get(id)), id);
 		to.setCollapsed(id, from.isCollapsed(id));
@@ -190,6 +199,11 @@ public class CampaniaEditTags extends VerticalLayout implements CampaniaEditor{
 		
 		currentCampania.setTags(toAdd);
 		
+	}
+
+	@Override
+	public boolean isValid() {
+		return true;
 	}
 
 }
