@@ -51,7 +51,6 @@ public class CampaniaEditDuration extends FormLayout implements CampaniaEditor{
 
 	@Override
 	public void commit() {
-		System.out.println(currentCampania);
 		currentCampania.setDuracion(TipoDuracion.valueOf(duracion.getValue().toString()));
 		currentCampania.setInicio(new DateTime(fechaInicio.getValue()));
 		

@@ -18,10 +18,13 @@ public class AccionPublicitaria {
 	private Campania camp;
 	private Tag tag;
 	
-	public AccionPublicitaria(String destinatario, String remitente, String remitentePsw) {
+	public AccionPublicitaria(TipoAccionPublicitaria tipo, String destinatario, String remitente, String remitentePsw) {
+		
+		this.tipo = tipo;
 		this.destinatario = destinatario;
 		this.remitente = remitente;
 		this.remitentePsw = remitentePsw;
+		this.ultimaEjecucion = Instant.MIN;
 	}
 
 	public Period getPeriodicidad() {
