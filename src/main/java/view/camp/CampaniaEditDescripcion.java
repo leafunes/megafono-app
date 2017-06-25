@@ -5,16 +5,21 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 import data.Campania;
 import services.CampaniaService;
+import view.Function;
+import view.ViewValidator;
 
 public class CampaniaEditDescripcion extends FormLayout implements CampaniaEditor{
 	
 	public static final String NAME = "EditDescrCamp";
+	
+	private ViewValidator validator;
 	
 	private TextField nombre;
 	private TextArea descr;
@@ -27,6 +32,9 @@ public class CampaniaEditDescripcion extends FormLayout implements CampaniaEdito
 		
 		nombre = new TextField("Nombre: ");
 		descr = new TextArea("Descripcion: ");
+		
+		validator = new ViewValidator();
+		validator.isNotEmpty(nombre::getValue, "Debe ingresar un nombre");
 		
 		addComponent(nombre);
 		addComponent(descr);
@@ -60,14 +68,16 @@ public class CampaniaEditDescripcion extends FormLayout implements CampaniaEdito
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 
 	@Override
 	public boolean isValid() {
-		return true;
+		
+		return validator.testAll();
+		
 	}
 
 

@@ -32,6 +32,7 @@ public class CampaniaPanel extends Panel implements View{
 	private Panel navigable;
 	private GridLayout mainLayout;
 	private Button nextBtt;
+	private Button prevBtt;
 	
 	private Campania currentCampania;
 	
@@ -50,17 +51,24 @@ public class CampaniaPanel extends Panel implements View{
 		
 		navigable = new Panel();
 		
-		mainLayout = new GridLayout(4, 3);
+		mainLayout = new GridLayout(4, 4);
 		
 		nextBtt = new Button("Siguiente");
+		prevBtt = new Button("Anterior");
 		
 		navigable.setContent(pages.get(pagesOrder.get(0)));
 		
 		mainLayout.addComponent(navigable, 0, 0, 3, 1);
 		mainLayout.addComponent(nextBtt, 3, 2);
+		mainLayout.addComponent(prevBtt, 1, 2);
+		
+		mainLayout.setRowExpandRatio(0, 80);
+		
 		mainLayout.setSizeFull();
-		mainLayout.setComponentAlignment(nextBtt, Alignment.MIDDLE_RIGHT);
+		mainLayout.setSpacing(true);
+		mainLayout.setComponentAlignment(nextBtt, Alignment.MIDDLE_LEFT);
 		nextBtt.addClickListener(e -> nextPage());
+		prevBtt.addClickListener(e -> prevPage());
 		
 		navigable.setStyleName(ValoTheme.PANEL_BORDERLESS);
 		navigable.setSizeFull();
@@ -83,6 +91,7 @@ public class CampaniaPanel extends Panel implements View{
 	
 		String nameOfCurrentView = pagesOrder.get(currentPageIndex);
 		CampaniaEditor currentEditor = pages.get(nameOfCurrentView);
+		
 		if(currentEditor.isValid()){
 			if(currentPageIndex < pages.size() - 1){
 				String nameOfNextView = pagesOrder.get(currentPageIndex + 1);
@@ -98,6 +107,19 @@ public class CampaniaPanel extends Panel implements View{
 
 		if(currentPageIndex == pages.size() - 1)
 			nextBtt.setCaption("Ok");
+		
+	}
+	
+	private void prevPage() {
+		
+		if(currentPageIndex > 0){
+			String nameOfPrevView = pagesOrder.get(currentPageIndex - 1);
+			navigable.setContent(pages.get(nameOfPrevView));
+			currentPageIndex--;
+			
+		}
+
+			nextBtt.setCaption("Siguiente");
 		
 	}
 
@@ -119,6 +141,10 @@ public class CampaniaPanel extends Panel implements View{
 
 	@Override
 	public void enter(ViewChangeEvent event) {
+		
+		if(currentCampania == null)
+			createCampania();
+		
 		
 	}
 	

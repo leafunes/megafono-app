@@ -14,10 +14,13 @@ import com.vaadin.ui.VerticalLayout;
 
 import data.Campania;
 import data.TipoDuracion;
+import view.ViewValidator;
 
 public class CampaniaEditDuration extends FormLayout implements CampaniaEditor{
 	
 	public static final String NAME = "CampEdirDuracion";
+	
+	private ViewValidator validator;
 	
 	private InlineDateField fechaInicio;
 	private ComboBox duracion;
@@ -26,14 +29,26 @@ public class CampaniaEditDuration extends FormLayout implements CampaniaEditor{
 	
 	public CampaniaEditDuration() {
 		
+		validator = new ViewValidator();
+		
 		fechaInicio = new InlineDateField("Fecha de inicio: ", new Date());
 		fechaInicio.setResolution(Resolution.MINUTE);
 		
 		duracion = new ComboBox("Duracion: ");
 		Arrays.asList(TipoDuracion.values()).forEach(t -> duracion.addItem(t));
+		duracion.setNullSelectionAllowed(false);
+		duracion.select(TipoDuracion.SEMANAL);
+		
+		validator.isFalse(() -> isBeforeNow(), "La fecha debe ser posterior a hoy");
 		
 		addComponent(fechaInicio);
 		addComponent(duracion);
+		
+	}
+	
+	private boolean isBeforeNow(){
+		
+		return new DateTime(fechaInicio.getValue()).isBeforeNow();
 		
 	}
 
@@ -59,13 +74,7 @@ public class CampaniaEditDuration extends FormLayout implements CampaniaEditor{
 	@Override
 	public boolean isValid() {
 		
-		DateTime fecha = new DateTime(fechaInicio.getValue());
-		
-		if(fecha.isBeforeNow()){
-			Notification.show("La fecha debe ser posterior a hoy", Notification.Type.ERROR_MESSAGE);
-			return false;
-		}
-		return true;
+		return validator.testAll();
 	}
 
 }
