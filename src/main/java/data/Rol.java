@@ -7,12 +7,14 @@ public class Rol {
 	
 	private String nombre;
 	private String descripcion;
+	private String nombreMainView;
 	private List<Permiso> permisos;
 	
-	public Rol(String nombre, String descripcion) {
+	public Rol(String nombre, String descripcion, String mainView) {
 		
 		this.nombre = nombre;
 		this.descripcion = descripcion;
+		this.nombreMainView = mainView;
 		
 		this.permisos = new ArrayList<>();
 		
@@ -40,6 +42,14 @@ public class Rol {
 
 	public void addPermiso(Permiso permiso) {
 		this.permisos.add(permiso);
+	}
+
+	public String getNombreMainView() {
+		return nombreMainView;
+	}
+
+	public void setNombreMainView(String nombreMainView) {
+		this.nombreMainView = nombreMainView;
 	}
 
 }

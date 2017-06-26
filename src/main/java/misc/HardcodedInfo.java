@@ -13,6 +13,8 @@ import data.Rol;
 import data.TipoAccionPublicitaria;
 import data.Usuario;
 import data.precios.PrecioAccionPublicitaria;
+import view.AnalistaView;
+import view.ClienteView;
 
 public class HardcodedInfo {
 	
@@ -24,9 +26,9 @@ public class HardcodedInfo {
 	private static DAOPrecio daoPrecio = new DAOPrecioNeodatis();
 	
 	private static final Rol cliente = new Rol("ClienteRol", "Gestion de campañas, agregar tags a campañas, agregar "
-				+ "acciones publicitarias a campañas");
+				+ "acciones publicitarias a campañas", ClienteView.class.getName());
 	private static final Rol analista = new Rol("AnalistaRol","Gestion de Tags, Gestion de acciones publicitarias "
-			+ "Gestion de precios, vista de reporting");
+			+ "Gestion de precios, vista de reporting", AnalistaView.class.getName());
 	
 	private static final Usuario admin = new Usuario("admin@admin.com", "21232f297a57a5a743894a0e4a801fc3", analista);
 	

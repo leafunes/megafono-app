@@ -1,40 +1,24 @@
-package view.camp;
+package view.tags;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.joda.time.Period;
 
-import com.vaadin.data.fieldgroup.BeanFieldGroup;
-import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
-import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.data.validator.IntegerRangeValidator;
-import com.vaadin.data.validator.NullValidator;
-import com.vaadin.server.ClientConnector;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 import data.AccionPublicitaria;
 import data.Campania;
 import data.Tag;
 import data.TipoAccionPublicitaria;
-import data.UnidadTiempo;
 import misc.MessageBox;
 import services.AccionPublicitariaService;
-import services.CampaniaService;
 import view.AccionField;
-import view.ViewValidator;
 
-public class CampaniaEditAciones extends VerticalLayout implements CampaniaEditor{
-	
-	public static final String NAME = "CampEditAcciones";
+public class TagsEditAcciones extends VerticalLayout implements TagEditor{
 	
 	private GridLayout mainLayout;
 	private Grid accionesElegidas;
@@ -45,7 +29,7 @@ public class CampaniaEditAciones extends VerticalLayout implements CampaniaEdito
 	private AccionPublicitariaService accionService = AccionPublicitariaService.getService();
 	private MessageBox messageBox;
 	
-	public CampaniaEditAciones() {
+	public TagsEditAcciones() {
 		
 		messageBox = MessageBox.getMessageBox();
 		
@@ -73,28 +57,21 @@ public class CampaniaEditAciones extends VerticalLayout implements CampaniaEdito
 	
 	private void addCurrentRow(){
 		
-		accionesElegidas.addRow(accionField.getCurrentAccion().getTipo(), 
-								accionField.getCurrentAccion().getDestinatario(),
-								accionField.getCurrentAccion().getPeriodicidad());
+		addAccion(accionField.getCurrentAccion());
 		
 	}
 	
-	@Override
-	public void editCampania(Campania c) {
-
-		accionesPublicitarias.clear();
-		accionesElegidas.getContainerDataSource().removeAllItems();
-		
-		accionField.setCampania(c);
-		
+	private void addAccion(AccionPublicitaria a){
+		accionesElegidas.addRow(a.getTipo(), 
+								a.getDestinatario(),
+								a.getPeriodicidad());
 	}
-
+	
 	@Override
 	public void clear() {
-
-		accionesPublicitarias.clear();
-		accionesElegidas.getContainerDataSource().removeAllItems();
 		
+		accionField.setTag(null);
+		accionesPublicitarias.clear();
 		
 	}
 
@@ -106,10 +83,15 @@ public class CampaniaEditAciones extends VerticalLayout implements CampaniaEdito
 	}
 
 	@Override
-	public boolean isValid() {
-		return accionField.isValid();
+	public void editTag(Tag t) {
+		accionesPublicitarias.clear();
+		accionesElegidas.getContainerDataSource().removeAllItems();
+		accionesElegidas.refreshAllRows();
+		
+		accionesPublicitarias.addAll(accionService.getAllActionsOf(t));
+		accionesPublicitarias.forEach(a -> addAccion(a));
+		
+		accionField.setTag(t);
+		
 	}
-	
-	
-
 }

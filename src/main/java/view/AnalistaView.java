@@ -15,7 +15,7 @@ import com.vaadin.ui.VerticalLayout;
 import view.tags.TagsPanel;
 
 
-public class AnalistaView extends VerticalLayout{
+public class AnalistaView extends VerticalLayout implements MainView{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -84,7 +84,8 @@ public class AnalistaView extends VerticalLayout{
 		
 	}
 	
-	protected void initNavigator(){
+	@Override
+	public void initNavigator(){
 
 		Navigator nav = new Navigator(getUI(), mainPanel);
 		

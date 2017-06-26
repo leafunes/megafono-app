@@ -1,5 +1,8 @@
 package view;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.data.validator.StringLengthValidator;
@@ -49,7 +52,7 @@ public class LoginView extends VerticalLayout{
 	private void init(){
 		
 		username = new TextField("Mail");
-		password = new PasswordField("Contrasenia");
+		password = new PasswordField("Contraseña");
 		loginButton = new Button("Login");
 		regisButton = new Button("Registrarse");
 		
@@ -65,7 +68,7 @@ public class LoginView extends VerticalLayout{
 		//password.setBuffered(true);
 		password.setNullSettingAllowed(true);
 		password.setNullRepresentation("");
-		password.addValidator(new NullValidator("Debe ingresar una contrasenia", false));
+		password.addValidator(new NullValidator("Debe ingresar una contraseña", false));
 		
 		loginButton.addClickListener(new ClickListener() {
 			
@@ -75,7 +78,7 @@ public class LoginView extends VerticalLayout{
 				if(username.isValid() && !username.getValue().isEmpty() &&
 						password.isValid() && !password.getValue().isEmpty()){
 					if(usuarioService.loginUsuario(username.getValue(), password.getValue())){
-						AnalistaView view = new AnalistaView();
+						MainView view = getMainView();
 						getUI().setContent(view);
 						view.initNavigator();
 					}
@@ -94,9 +97,9 @@ public class LoginView extends VerticalLayout{
 				if(username.isValid() && !username.getValue().isEmpty() &&
 						password.isValid() && !password.getValue().isEmpty()){
 					if(!usuarioService.isUsernameInUse(username.getValue())){
-						usuarioService.altaUsuario(username.getValue(), password.getValue(), "cliente");
+						usuarioService.altaCliente(username.getValue(), password.getValue());
 						
-						getUI().setContent(new AnalistaView());
+						Notification.show("Registrado", Notification.Type.ASSISTIVE_NOTIFICATION);
 					}
 					
 					else
@@ -126,6 +129,19 @@ public class LoginView extends VerticalLayout{
 		addComponent(horizontalLayout);
 		setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
 		
+	}
+	
+	private MainView getMainView(){
+		Class<MainView> clazz;
+		try {
+			clazz = (Class<MainView>) Class.forName(usuarioService.getMainViewOfLoggedUser());
+			Constructor<MainView> ctor = clazz.getConstructor();
+			return ctor.newInstance();
+		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	

@@ -67,6 +67,10 @@ public class UsuarioService {
 		return logedUser;
 	}
 	
+	public String getMainViewOfLoggedUser(){
+		return logedUser.getRol().getNombreMainView();
+	}
+	
 	private String getMd5Of(String s){
 		
 		MessageDigest m;
@@ -89,6 +93,11 @@ public class UsuarioService {
 		}
 		
 		return hashText;
+		
+	}
+
+	public void altaCliente(String mail, String pasWord) {
+		altaUsuario(mail, pasWord, "ClienteRol");
 		
 	}
 

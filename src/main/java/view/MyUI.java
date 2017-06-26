@@ -22,17 +22,10 @@ public class MyUI extends UI {
 
 	@Override
     protected void init(VaadinRequest vaadinRequest) {
-    	/*LoginView login = new LoginView();
-		setContent(login);
-    	*/
-		
-    	//AnalistaView mainView = new AnalistaView();
-    	//setContent(mainView);
-		
-		ClienteView mainView = new ClienteView();
-		setContent(mainView);
+    	LoginView login = new LoginView();
     	
-    	mainView.initNavigator();
+		setContent(login);
+    	
     	
     }
 

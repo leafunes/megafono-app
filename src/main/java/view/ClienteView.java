@@ -16,7 +16,7 @@ import view.camp.CampaniaPanel;
 import view.camp.CampaniaViewer;
 import view.tags.TagsPanel;
 
-public class ClienteView extends VerticalLayout{
+public class ClienteView extends VerticalLayout implements MainView{
 
 	String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 	private String logoPath = basepath + "/WEB-INF/images/logo.png";
@@ -83,7 +83,8 @@ public class ClienteView extends VerticalLayout{
 		
 	}
 	
-	protected void initNavigator(){
+	@Override
+	public void initNavigator(){
 
 		Navigator nav = new Navigator(getUI(), mainPanel);
 		

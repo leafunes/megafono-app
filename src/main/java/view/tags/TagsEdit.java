@@ -33,6 +33,7 @@ public class TagsEdit extends Panel{
 	private TagsEditDescripcion editDescripcion;
 	private TagsEditPricing editPricing;
 	private TagsEditDelete editDelete;
+	private TagsEditAcciones editAcciones;
 	private GridLayout mainLayout;
 	
 	private MessageBox messageBox;
@@ -44,11 +45,13 @@ public class TagsEdit extends Panel{
 		editDescripcion = new TagsEditDescripcion();
 		editPricing = new TagsEditPricing();
 		editDelete = new TagsEditDelete();
+		editAcciones = new TagsEditAcciones();
 		mainLayout = new GridLayout(6,2);
 		
 		Button okBtt = new Button("OK");
 		okBtt.addClickListener(event -> {
 			editDescripcion.commit();
+			editAcciones.commit();
 			editPricing.commit();
 			
 		});
@@ -64,6 +67,7 @@ public class TagsEdit extends Panel{
 		cancelBtt.addClickListener(event -> {
 			editDescripcion.clear();
 			editPricing.clear();
+			editAcciones.commit();
 			editDelete.clear();
 			messageBox.publish("CancelButtonTag");
 			
@@ -74,7 +78,7 @@ public class TagsEdit extends Panel{
 		tabs = new TabSheet();
 
 		tabs.addTab(editDescripcion, "Descripcion");
-		tabs.addTab(new Label("TODO"), "Acciones");
+		tabs.addTab(editAcciones, "Acciones");
 		tabs.addTab(editPricing, "Pricing");
 		tabs.addTab(editDelete, "Borrar Tag");
 		tabs.setSizeFull();
@@ -101,6 +105,7 @@ public class TagsEdit extends Panel{
 	public void editTag(Tag tag){
 		editDescripcion.editTag(tag);
 		editPricing.editTag(tag);
+		editAcciones.editTag(tag);
 		editDelete.editTag(tag);
 		
 	}
