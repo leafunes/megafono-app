@@ -45,12 +45,6 @@
 		<dependencies>
 
 			<dependency>
-			    <groupId>javax.mail</groupId>
-			    <artifactId>mail</artifactId>
-			    <version>1.4</version>
-			</dependency>
-
-			<dependency>
 			    <groupId>com.atlassian.clover</groupId>
 			    <artifactId>clover</artifactId>
 			    <version>4.1.2</version>
@@ -67,6 +61,12 @@
 	</dependencyManagement>
 
 	<dependencies>
+
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>1.4</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
