@@ -11,6 +11,7 @@ import org.neodatis.odb.impl.core.query.criteria.CriteriaQuery;
 import daos.iface.DAOCampania;
 import data.Campania;
 import data.Usuario;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class DAOCampaniaNeodatis extends DAONeodatis<Campania> implements DAOCampania{
 
@@ -19,11 +20,11 @@ public class DAOCampaniaNeodatis extends DAONeodatis<Campania> implements DAOCam
 		
 		List<Campania> toRet = new ArrayList<>();
 		
-		//IQuery query = new CriteriaQuery(Campania.class, Where.equal("owner.email", u.getEmail()));
-		//FIXME
+		IQuery query = new CriteriaQuery(Campania.class, Where.equal("owner.email", u.getEmail()));
+		
 		openClient();
 		
-		Objects<Campania> objs = odb.getObjects(Campania.class);
+		Objects<Campania> objs = odb.getObjects(query);
 		
 		closeClient();
 		
@@ -36,8 +37,8 @@ public class DAOCampaniaNeodatis extends DAONeodatis<Campania> implements DAOCam
 
 	@Override
 	public List<Campania> getAllActiveCampanias() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		throw new NotImplementedException();
 	}
 
 	

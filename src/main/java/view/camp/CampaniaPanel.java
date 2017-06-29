@@ -9,11 +9,14 @@ import java.util.TreeMap;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.Page;
+import com.vaadin.shared.Position;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -93,16 +96,8 @@ public class CampaniaPanel extends Panel implements View{
 		CampaniaEditor currentEditor = pages.get(nameOfCurrentView);
 		
 		if(currentEditor.isValid()){
-			if(currentPageIndex < pages.size() - 1){
-				String nameOfNextView = pagesOrder.get(currentPageIndex + 1);
-				navigable.setContent(pages.get(nameOfNextView));
-				currentPageIndex++;
-			}
-			else{
-				pages.forEach((k, v) -> v.commit());
-				pages.forEach((k, v) -> v.clear());
-				campaniaService.saveCampania(currentCampania);
-			}
+			if(currentPageIndex < pages.size() - 1) navigateNext();
+			else commitAccion();
 		}
 
 		if(currentPageIndex == pages.size() - 1)
@@ -112,15 +107,38 @@ public class CampaniaPanel extends Panel implements View{
 	
 	private void prevPage() {
 		
-		if(currentPageIndex > 0){
-			String nameOfPrevView = pagesOrder.get(currentPageIndex - 1);
-			navigable.setContent(pages.get(nameOfPrevView));
-			currentPageIndex--;
-			
-		}
+		if(currentPageIndex > 0)
+			navigatePrev();
 
 			nextBtt.setCaption("Siguiente");
 		
+	}
+	
+	private void navigateNext(){
+		String nameOfNextView = pagesOrder.get(currentPageIndex + 1);
+		navigable.setContent(pages.get(nameOfNextView));
+		currentPageIndex++;
+	}
+	
+	private void navigatePrev(){
+		String nameOfPrevView = pagesOrder.get(currentPageIndex - 1);
+		navigable.setContent(pages.get(nameOfPrevView));
+		currentPageIndex--;
+		
+	}
+	
+	private void commitAccion(){
+		pages.forEach((k, v) -> v.commit());
+		pages.forEach((k, v) -> v.clear());
+		currentPageIndex = 0;
+		
+		campaniaService.saveCampania(currentCampania);
+		
+		Notification n = new Notification("Camapña creada", ValoTheme.NOTIFICATION_SUCCESS);
+		n.setPosition(Position.TOP_CENTER);
+		n.show(Page.getCurrent());
+		
+		getUI().getNavigator().navigateTo("");
 	}
 
 	private void initPages() {

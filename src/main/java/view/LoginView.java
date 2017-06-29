@@ -6,6 +6,8 @@ import java.lang.reflect.InvocationTargetException;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.data.validator.StringLengthValidator;
+import com.vaadin.server.Page;
+import com.vaadin.shared.Position;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -99,7 +101,9 @@ public class LoginView extends VerticalLayout{
 					if(!usuarioService.isUsernameInUse(username.getValue())){
 						usuarioService.altaCliente(username.getValue(), password.getValue());
 						
-						Notification.show("Registrado", Notification.Type.ASSISTIVE_NOTIFICATION);
+						Notification n = new Notification("Usuario Registrado", ValoTheme.NOTIFICATION_SUCCESS);
+						n.setPosition(Position.TOP_CENTER);
+						n.show(Page.getCurrent());
 					}
 					
 					else

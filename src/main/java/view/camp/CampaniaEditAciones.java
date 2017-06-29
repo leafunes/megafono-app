@@ -107,7 +107,7 @@ public class CampaniaEditAciones extends VerticalLayout implements CampaniaEdito
 
 	@Override
 	public boolean isValid() {
-		return accionField.isValid();
+		return true;
 	}
 	
 	
