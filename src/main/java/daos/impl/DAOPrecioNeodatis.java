@@ -1,15 +1,11 @@
 package daos.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-import org.joda.time.DateTime;
 import org.neodatis.odb.Objects;
 import org.neodatis.odb.core.query.IQuery;
-import org.neodatis.odb.core.query.criteria.Where;
 import org.neodatis.odb.core.query.nq.SimpleNativeQuery;
-import org.neodatis.odb.impl.core.query.criteria.CriteriaQuery;
 
 import daos.iface.DAOPrecio;
 import data.Tag;

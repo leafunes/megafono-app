@@ -5,19 +5,18 @@ import java.io.File;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinService;
-import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-import view.camp.CampaniaEditDescripcion;
 import view.camp.CampaniaPanel;
 import view.camp.CampaniaViewer;
-import view.tags.TagsPanel;
 
 public class ClienteView extends VerticalLayout implements MainView{
 
+	private static final long serialVersionUID = 1L;
+	
 	String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
 	private String logoPath = basepath + "/WEB-INF/images/logo.png";
 	

@@ -3,9 +3,6 @@ package daos.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.neodatis.odb.ODB;
-import org.neodatis.odb.ODBFactory;
-import org.neodatis.odb.OID;
 import org.neodatis.odb.Objects;
 import org.neodatis.odb.core.query.IQuery;
 import org.neodatis.odb.core.query.criteria.Where;
@@ -13,7 +10,6 @@ import org.neodatis.odb.impl.core.query.criteria.CriteriaQuery;
 
 import daos.iface.DAOTag;
 import data.Tag;
-import misc.NeodatisServerContentListener;
 
 public class DAOTagNeodatis extends DAONeodatis<Tag> implements DAOTag{
 	

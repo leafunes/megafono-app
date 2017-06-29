@@ -1,7 +1,6 @@
 package services;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import daos.iface.DAO;
@@ -11,8 +10,6 @@ import daos.impl.DAONeodatis;
 import data.Campania;
 import data.MensajeCampania;
 import data.Usuario;
-import net.coobird.thumbnailator.Thumbnailator;
-import net.coobird.thumbnailator.Thumbnails;
 
 public class CampaniaService {
 	

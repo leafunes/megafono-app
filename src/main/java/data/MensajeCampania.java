@@ -1,7 +1,5 @@
 package data;
 
-import java.awt.Image;
-import java.nio.file.Path;
 
 public class MensajeCampania {
 	

@@ -1,7 +1,6 @@
 package data.precios;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 
 import org.joda.time.DateTime;

@@ -7,6 +7,9 @@ import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 
 public abstract class DropHandlerAcceptAll implements DropHandler{
 
+
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public abstract void drop(DragAndDropEvent event);
 

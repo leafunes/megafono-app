@@ -1,6 +1,5 @@
 package services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import daos.iface.DAOPrecio;
@@ -8,7 +7,6 @@ import daos.iface.DAOTag;
 import daos.impl.DAOPrecioNeodatis;
 import daos.impl.DAOTagNeodatis;
 import data.Tag;
-import data.precios.Precio;
 import data.precios.PrecioTag;
 
 public class TagService {

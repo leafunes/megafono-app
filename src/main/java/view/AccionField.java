@@ -1,6 +1,5 @@
 package view;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,7 +19,9 @@ import data.UnidadTiempo;
 import misc.MessageBox;
 
 public class AccionField extends HorizontalLayout{
-	
+
+	private static final long serialVersionUID = 1L;
+
 	private ViewValidator validator;
 	
 	private TextField destinatario;
