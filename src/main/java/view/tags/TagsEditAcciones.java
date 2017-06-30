@@ -22,7 +22,6 @@ import view.AccionField;
 
 public class TagsEditAcciones extends VerticalLayout implements TagEditor{
 	
-	private GridLayout mainLayout;
 	private Grid accionesElegidas;
 	private AccionField accionField;
 	
@@ -38,7 +37,6 @@ public class TagsEditAcciones extends VerticalLayout implements TagEditor{
 		
 		accionesPublicitarias = new ArrayList<>();
 		accionField = new AccionField(accionesPublicitarias);
-		mainLayout = new GridLayout(7, 2);
 		accionesElegidas = new Grid();
 		
 		addComponent(accionesElegidas);

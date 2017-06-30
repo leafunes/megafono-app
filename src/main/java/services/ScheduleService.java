@@ -60,7 +60,8 @@ public class ScheduleService {
 	public void addAcciones(Campania camp, List<AccionPublicitaria> acciones){
 		
 		DateTime end = campService.getEndOf(camp);
-		for(AccionPublicitaria a : acciones)if(a.getTipo() == TipoAccionPublicitaria.MAIL){
+		for(AccionPublicitaria a : acciones)if(a.getTipo() == TipoAccionPublicitaria.MAIL &&
+												camp.getInicio().plus(a.getPeriodicidad()).isAfter(end)){
 			
 			JobDetail job = newJob(MailJob.class)
 				      .withIdentity("mail" + id, "g1")

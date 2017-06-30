@@ -30,7 +30,7 @@ public class MailJob implements Job{
 		destinatario = dataMap.getString("destinatario");
 		asunto = dataMap.getString("asunto");
 		mensaje = dataMap.getString("mensaje");
-		
+		System.out.println("enviado " + mensaje);
 		sender.send(new Mail(destinatario, asunto, mensaje));
 	}
 
