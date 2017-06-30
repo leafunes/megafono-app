@@ -12,24 +12,21 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 
-import daos.iface.DAOAccionPublicitaria;
-import daos.iface.DAOCampania;
-import daos.impl.DAOAccionPublicitariaNeodatis;
-import daos.impl.DAOCampaniaNeodatis;
 import data.AccionPublicitaria;
 import data.Campania;
-import data.Tag;
 import misc.MailsWaitingForSending;
 
 
-public class ScheduleService extends Thread {
+public class ScheduleService {
 	private List<Process> procesos;
 	private AccionPublicitariaService apService;
 	private Scheduler sch;
+	Campania c;
 	
-	public ScheduleService() {
+	public ScheduleService(Campania c) {
 		procesos = new ArrayList<>();
 		apService = AccionPublicitariaService.getService();
+		this.c = c;
 
 		try {
 			sch = StdSchedulerFactory.getDefaultScheduler();
@@ -39,8 +36,8 @@ public class ScheduleService extends Thread {
 		}
 	}
 	
-	public void run(){
-			List<AccionPublicitaria> aps = apService.getALLActions();
+	public void execute(){
+			List<AccionPublicitaria> aps = apService.getAllActionsOf(c);
 			aps.forEach(r -> procesos.add(new Process(r, sch)));
 			procesos.forEach(p -> p.configure());
 		

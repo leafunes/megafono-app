@@ -39,6 +39,10 @@ public class AccionPublicitariaService {
 		
 	}
 	
+	List<AccionPublicitaria> getAllActionsOf(Campania c){
+		return daoAccion.getAllActionsOf(c);
+	}
+	
 	public List<AccionPublicitaria> getAllActionsOf(Tag t){
 		return daoAccion.getAllActionsOf(t);
 	}
