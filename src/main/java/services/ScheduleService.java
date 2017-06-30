@@ -24,13 +24,12 @@ import misc.MailsWaitingForSending;
 
 public class ScheduleService extends Thread {
 	private List<Process> procesos;
-	
-	DAOCampania daoc = new DAOCampaniaNeodatis();
-	DAOAccionPublicitaria daoap = new DAOAccionPublicitariaNeodatis();
+	private AccionPublicitariaService apService;
 	private Scheduler sch;
 	
 	public ScheduleService() {
 		procesos = new ArrayList<>();
+		apService = AccionPublicitariaService.getService();
 
 		try {
 			sch = StdSchedulerFactory.getDefaultScheduler();
@@ -41,26 +40,13 @@ public class ScheduleService extends Thread {
 	}
 	
 	public void run(){
-			List<AccionPublicitaria> aps = getAllAccionesPublicitarias();
+			List<AccionPublicitaria> aps = apService.getALLActions();
 			aps.forEach(r -> procesos.add(new Process(r, sch)));
 			procesos.forEach(p -> p.configure());
 		
 	}
 
-	private List<AccionPublicitaria> getAllAccionesPublicitarias(){
-		List<AccionPublicitaria> accionesTotales = new ArrayList<>();
-		
-		List<Campania> activas = daoc.getAllActiveCampanias();
-		
-		for (Campania c : activas){
-			List<Tag> tags = c.getTags();
-			for(Tag t : tags)
-				accionesTotales.addAll(daoap.getAllActionsOf(t));
-			accionesTotales.addAll(daoap.getAllActionsOf(c));
-		}
-		
-		return accionesTotales;
-	}
+
 	
 	private static class Process{
 		private AccionPublicitaria ap;
