@@ -10,6 +10,7 @@ import org.neodatis.odb.impl.core.query.criteria.CriteriaQuery;
 
 import daos.iface.DAOAccionPublicitaria;
 import data.AccionPublicitaria;
+import data.Campania;
 import data.Tag;
 
 public class DAOAccionPublicitariaNeodatis extends DAONeodatis<AccionPublicitaria> 
@@ -34,7 +35,27 @@ public class DAOAccionPublicitariaNeodatis extends DAONeodatis<AccionPublicitari
 		
 		return toRet;
 	}
+
 	
+	@Override
+	public List<AccionPublicitaria> getAllActionsOf(Campania c) {
+		IQuery query = new CriteriaQuery(AccionPublicitaria.class, 
+				Where.equal("campania.nombre", c.getNombre()));
+
+		List<AccionPublicitaria> toRet = new ArrayList<>();
+		
+		openClient();
+		
+		Objects<AccionPublicitaria> objs = odb.getObjects(query);
+		
+		closeClient();
+		
+		if(!objs.isEmpty())
+		toRet.addAll(objs);
+		
+		
+		return toRet;
+	}
 	
 
 }
