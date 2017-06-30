@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.joda.time.Period;
 
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 
 import data.AccionPublicitaria;
 import data.Campania;
@@ -18,11 +20,13 @@ import data.TipoAccionPublicitaria;
 import data.UnidadTiempo;
 import misc.MessageBox;
 
-public class AccionField extends HorizontalLayout{
+public class AccionField extends VerticalLayout{
 
 	private static final long serialVersionUID = 1L;
 
 	private ViewValidator validator;
+	private HorizontalLayout upperLayout;
+	private HorizontalLayout lowerLayout;
 	
 	private TextField destinatario;
 	private ComboBox tipoAccion;
@@ -42,6 +46,9 @@ public class AccionField extends HorizontalLayout{
 		messageBox = MessageBox.getMessageBox();
 		validator = new ViewValidator();
 		
+		upperLayout = new HorizontalLayout();
+		lowerLayout = new HorizontalLayout();
+		
 		this.acciones = acciones;
 		
 		tipoAccion = new ComboBox();
@@ -51,6 +58,7 @@ public class AccionField extends HorizontalLayout{
 		tipoAccion.select(TipoAccionPublicitaria.MAIL);
 		
 		addBtt = new Button("+");
+		addBtt.setSizeFull();
 		cantDe = new TextField();
 		destinatario = new TextField();
 		
@@ -62,15 +70,27 @@ public class AccionField extends HorizontalLayout{
 		unidadTiempo.setNullSelectionAllowed(false);
 		unidadTiempo.select(UnidadTiempo.MINUTOS);
 		
-		addComponent(new Label("Tipo: "));
-		addComponent(tipoAccion);
-		addComponent(new Label("Destintatario: "));
-		addComponent(destinatario);
-		addComponent(new Label("Cada: "));
-		addComponent(cantDe);
-		addComponent(unidadTiempo);
-		addComponent(addBtt);
+		upperLayout.addComponent(new Label("Tipo: "));
+		upperLayout.addComponent(tipoAccion);
+		upperLayout.addComponent(new Label("Destintatario: "));
+		upperLayout.addComponent(destinatario);
+		upperLayout.setComponentAlignment(tipoAccion, Alignment.MIDDLE_LEFT);
+		upperLayout.setComponentAlignment(destinatario, Alignment.MIDDLE_LEFT);
 		
+		lowerLayout.addComponent(new Label("Cada: "));
+		lowerLayout.addComponent(cantDe);
+		lowerLayout.addComponent(unidadTiempo);
+		lowerLayout.addComponent(addBtt);
+		lowerLayout.setComponentAlignment(cantDe, Alignment.MIDDLE_LEFT);
+		lowerLayout.setComponentAlignment(unidadTiempo, Alignment.MIDDLE_LEFT);
+		
+		addComponent(upperLayout);
+		addComponent(lowerLayout);
+		
+		lowerLayout.setSpacing(true);
+		upperLayout.setSpacing(true);
+		lowerLayout.setSizeFull();
+		upperLayout.setSizeFull();
 		setSpacing(true);
 		
 		validator.isNotEmpty(destinatario::getValue, "Debe ingresar un destinatario");

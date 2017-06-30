@@ -8,6 +8,7 @@ import org.joda.time.DateTime;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.InlineDateField;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
@@ -16,7 +17,7 @@ import data.Campania;
 import data.TipoDuracion;
 import view.ViewValidator;
 
-public class CampaniaEditDuration extends FormLayout implements CampaniaEditor{
+public class CampaniaEditDuration extends GridLayout implements CampaniaEditor{
 	
 	public static final String NAME = "CampEdirDuracion";
 	
@@ -24,12 +25,17 @@ public class CampaniaEditDuration extends FormLayout implements CampaniaEditor{
 	
 	private InlineDateField fechaInicio;
 	private ComboBox duracion;
+	private FormLayout mainLayout;
 	
 	private Campania currentCampania;
 	
 	public CampaniaEditDuration() {
 		
+		super(3,3);
+		setSizeFull();
+		
 		validator = new ViewValidator();
+		mainLayout = new FormLayout();
 		
 		fechaInicio = new InlineDateField("Fecha de inicio: ", new Date());
 		fechaInicio.setResolution(Resolution.MINUTE);
@@ -41,8 +47,10 @@ public class CampaniaEditDuration extends FormLayout implements CampaniaEditor{
 		
 		validator.isFalse(() -> isBeforeNow(), "La fecha debe ser posterior a hoy");
 		
-		addComponent(fechaInicio);
-		addComponent(duracion);
+		mainLayout.addComponent(fechaInicio);
+		mainLayout.addComponent(duracion);
+		
+		addComponent(mainLayout, 1, 1);
 		
 	}
 	

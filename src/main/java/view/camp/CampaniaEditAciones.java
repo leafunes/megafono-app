@@ -3,8 +3,10 @@ package view.camp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import org.joda.time.Period;
+import org.joda.time.format.PeriodFormat;
 
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
@@ -48,23 +50,25 @@ public class CampaniaEditAciones extends VerticalLayout implements CampaniaEdito
 	public CampaniaEditAciones() {
 		
 		messageBox = MessageBox.getMessageBox();
+		setSizeFull();
 		
 		accionesPublicitarias = new ArrayList<>();
 		accionField = new AccionField(accionesPublicitarias);
 		mainLayout = new GridLayout(7, 2);
 		accionesElegidas = new Grid();
 		
-		accionesElegidas.addColumn("Tipo", TipoAccionPublicitaria.class);
-		accionesElegidas.addColumn("Destinatario", String.class);
-		accionesElegidas.addColumn("Periodicidad", Period.class);
-		accionesElegidas.setSizeFull();
-		
 		mainLayout.addComponent(accionesElegidas, 1, 0, 5, 0);
 		mainLayout.addComponent(accionField, 1, 1, 5, 1);
-		mainLayout.setColumnExpandRatio(6, 0.1F);
-		
 		mainLayout.setSpacing(true);
+		mainLayout.setSizeFull();
 		
+		mainLayout.setRowExpandRatio(0, 50);
+		
+		accionesElegidas.addColumn("Tipo", TipoAccionPublicitaria.class);
+		accionesElegidas.addColumn("Destinatario", String.class);
+		accionesElegidas.addColumn("Periodicidad", String.class);
+		accionesElegidas.setSizeFull();
+
 		messageBox.suscribirse("NewAccion", () -> addCurrentRow());
 		
 		addComponent(mainLayout);
@@ -75,7 +79,8 @@ public class CampaniaEditAciones extends VerticalLayout implements CampaniaEdito
 		
 		accionesElegidas.addRow(accionField.getCurrentAccion().getTipo(), 
 								accionField.getCurrentAccion().getDestinatario(),
-								accionField.getCurrentAccion().getPeriodicidad());
+								accionField.getCurrentAccion().getPeriodicidad()
+								.toString(PeriodFormat.wordBased(Locale.getDefault())));
 		
 	}
 	

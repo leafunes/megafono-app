@@ -13,6 +13,7 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.server.FileResource;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.Upload;
@@ -23,12 +24,13 @@ import data.Tag;
 import net.coobird.thumbnailator.Thumbnails;
 import services.CampaniaService;
 
-public class CampaniaEditMensaje extends FormLayout implements CampaniaEditor{
+public class CampaniaEditMensaje extends GridLayout implements CampaniaEditor{
 	
 	public static final String NAME = "EditMsgCamp";
 	
 	private TextArea mensajeTxt;
 	private Upload upload;
+	private FormLayout mainLayout;
 	
 	private Campania currentCampania;
 	private MensajeCampania mensajeCampania;
@@ -40,6 +42,10 @@ public class CampaniaEditMensaje extends FormLayout implements CampaniaEditor{
 
 	public CampaniaEditMensaje() {
 		
+		super(3,3);
+		setSizeFull();
+		
+		mainLayout = new FormLayout();
 		campaniaService = CampaniaService.getService();
 		
 		Embedded image = new Embedded("Imagen del mensaje: ");
@@ -78,10 +84,11 @@ public class CampaniaEditMensaje extends FormLayout implements CampaniaEditor{
 			image.setSource(new FileResource(thumb));
 		});
 		
-		addComponent(mensajeTxt);
-		addComponent(image);
-		addComponent(upload);
+		mainLayout.addComponent(mensajeTxt);
+		mainLayout.addComponent(image);
+		mainLayout.addComponent(upload);
 		
+		addComponent(mainLayout,1 ,1 );
 		
 	}
 

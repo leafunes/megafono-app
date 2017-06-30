@@ -5,6 +5,7 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
@@ -15,7 +16,7 @@ import services.CampaniaService;
 import view.Function;
 import view.ViewValidator;
 
-public class CampaniaEditDescripcion extends FormLayout implements CampaniaEditor{
+public class CampaniaEditDescripcion extends GridLayout implements CampaniaEditor{
 	
 	public static final String NAME = "EditDescrCamp";
 	
@@ -23,6 +24,7 @@ public class CampaniaEditDescripcion extends FormLayout implements CampaniaEdito
 	
 	private TextField nombre;
 	private TextArea descr;
+	private FormLayout mainLayout;
 	
 	private Campania currentCampania;
 	
@@ -30,14 +32,21 @@ public class CampaniaEditDescripcion extends FormLayout implements CampaniaEdito
 	
 	public CampaniaEditDescripcion() {
 		
+		super(3,3);
+		setSizeFull();
+		
 		nombre = new TextField("Nombre: ");
 		descr = new TextArea("Descripcion: ");
+		mainLayout = new FormLayout();
 		
 		validator = new ViewValidator();
 		validator.isNotEmpty(nombre::getValue, "Debe ingresar un nombre");
 		
-		addComponent(nombre);
-		addComponent(descr);
+		mainLayout.addComponent(nombre);
+		mainLayout.addComponent(descr);
+		
+		
+		addComponent(mainLayout,1,1);
 		
 	}
 
