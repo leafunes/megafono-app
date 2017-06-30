@@ -10,6 +10,7 @@ import org.neodatis.odb.impl.core.query.criteria.CriteriaQuery;
 
 import daos.iface.DAOCampania;
 import data.Campania;
+import data.EstadoCampania;
 import data.Usuario;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -38,7 +39,20 @@ public class DAOCampaniaNeodatis extends DAONeodatis<Campania> implements DAOCam
 	@Override
 	public List<Campania> getAllActiveCampanias() {
 		
-		throw new NotImplementedException();
+		List<Campania> toRet = new ArrayList<>();
+		//TODO
+		//IQuery query = new CriteriaQuery(Campania.class, Where.equal("estado", EstadoCampania.ACTIVA));
+		
+		openClient();
+		
+		Objects<Campania> objs = odb.getObjects(Campania.class);
+		
+		closeClient();
+		
+		if(!objs.isEmpty())
+			toRet.addAll(objs);
+		
+		return toRet;
 	}
 
 	

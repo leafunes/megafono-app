@@ -23,6 +23,7 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import data.AccionPublicitaria;
 import data.Campania;
+import data.EstadoCampania;
 import misc.MessageBox;
 import misc.Procedure;
 import services.CampaniaService;
@@ -84,6 +85,7 @@ public class CampaniaPanel extends Panel implements View{
 	private void createCampania() {
 		
 		currentCampania = new Campania("Nueva Campaña", "");
+		currentCampania.setEstado(EstadoCampania.ACTIVA);
 		editCampania(currentCampania);
 		
 	}

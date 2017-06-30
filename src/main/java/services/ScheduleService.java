@@ -16,6 +16,8 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 
+import daos.iface.DAOCampania;
+import daos.impl.DAOCampaniaNeodatis;
 import data.AccionPublicitaria;
 import data.Campania;
 import data.Mail;
@@ -36,6 +38,7 @@ public class ScheduleService {
 	
 	private CampaniaService campService;
 	private AccionPublicitariaService accionService;
+	private DAOCampania daoCampania;
 	private long id = 0;
 	
 	public static ScheduleService getService(){
@@ -45,6 +48,8 @@ public class ScheduleService {
 	}
 	
 	public ScheduleService() {
+		daoCampania = new DAOCampaniaNeodatis();
+		
 		try {
 			scheduler = StdSchedulerFactory.getDefaultScheduler();
 			scheduler.start();
@@ -55,13 +60,17 @@ public class ScheduleService {
 			e.printStackTrace();
 		}
 		
+		List<Campania> activas= daoCampania.getAllActiveCampanias();
+		
+		activas.forEach(a -> setScheduleFor(a));
 	}
 	
 	public void addAcciones(Campania camp, List<AccionPublicitaria> acciones){
 		
 		DateTime end = campService.getEndOf(camp);
 		for(AccionPublicitaria a : acciones)if(a.getTipo() == TipoAccionPublicitaria.MAIL &&
-												camp.getInicio().plus(a.getPeriodicidad()).isAfter(end)){
+												camp.getInicio().plus(a.getPeriodicidad()).isBefore(end)&&
+												end.isAfterNow()){
 			
 			JobDetail job = newJob(MailJob.class)
 				      .withIdentity("mail" + id, "g1")
