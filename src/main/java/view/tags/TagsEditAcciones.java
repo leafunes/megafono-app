@@ -3,8 +3,10 @@ package view.tags;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 import org.joda.time.Period;
+import org.joda.time.format.PeriodFormat;
 
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.GridLayout;
@@ -32,26 +34,25 @@ public class TagsEditAcciones extends VerticalLayout implements TagEditor{
 	public TagsEditAcciones() {
 		
 		messageBox = MessageBox.getMessageBox();
+		setSizeFull();
 		
 		accionesPublicitarias = new ArrayList<>();
 		accionField = new AccionField(accionesPublicitarias);
 		mainLayout = new GridLayout(7, 2);
 		accionesElegidas = new Grid();
 		
+		addComponent(accionesElegidas);
+		setExpandRatio(accionesElegidas, 70);
+		addComponent(accionField);
+		setSpacing(true);
+		
 		accionesElegidas.addColumn("Tipo", TipoAccionPublicitaria.class);
 		accionesElegidas.addColumn("Destinatario", String.class);
-		accionesElegidas.addColumn("Periodicidad", Period.class);
+		accionesElegidas.addColumn("Periodicidad", String.class);
 		accionesElegidas.setSizeFull();
-		
-		mainLayout.addComponent(accionesElegidas, 1, 0, 5, 0);
-		mainLayout.addComponent(accionField, 1, 1, 5, 1);
-		mainLayout.setColumnExpandRatio(6, 0.1F);
-		
-		mainLayout.setSpacing(true);
-		
+
 		messageBox.suscribirse("NewAccion", () -> addCurrentRow());
 		
-		addComponent(mainLayout);
 		
 	}
 	
@@ -64,7 +65,8 @@ public class TagsEditAcciones extends VerticalLayout implements TagEditor{
 	private void addAccion(AccionPublicitaria a){
 		accionesElegidas.addRow(a.getTipo(), 
 								a.getDestinatario(),
-								a.getPeriodicidad());
+								a.getPeriodicidad()
+								.toString(PeriodFormat.wordBased(Locale.getDefault())));
 	}
 	
 	@Override
