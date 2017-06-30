@@ -179,12 +179,17 @@ public class CampaniaEditTags extends VerticalLayout implements CampaniaEditor{
 	@Override
 	public void editCampania(Campania c) {
 		currentCampania = c;
+		tagService.getAllHabilitedTags().forEach(t -> allTags.put(t.getNombre(), t));
 		
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+		allTags.forEach((id, tag) -> tagsDisponibles.addItem(getTagToTable(tag), id));
+		tagsElegidos.removeAllItems();
+		
+		actualizeDisponibles();
+		actualizeElegidos();
 		
 	}
 

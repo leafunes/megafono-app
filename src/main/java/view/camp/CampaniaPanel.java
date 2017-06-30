@@ -57,7 +57,7 @@ public class CampaniaPanel extends Panel implements View{
 		mainLayout = new GridLayout(4, 4);
 		
 		nextBtt = new Button("Siguiente");
-		prevBtt = new Button("Anterior");
+		prevBtt = new Button("Cancelar");
 		
 		navigable.setContent(pages.get(pagesOrder.get(0)));
 		
@@ -96,6 +96,7 @@ public class CampaniaPanel extends Panel implements View{
 		CampaniaEditor currentEditor = pages.get(nameOfCurrentView);
 		
 		if(currentEditor.isValid()){
+			prevBtt.setCaption("Anterior");
 			if(currentPageIndex < pages.size() - 1) navigateNext();
 			else commitAccion();
 		}
@@ -106,11 +107,16 @@ public class CampaniaPanel extends Panel implements View{
 	}
 	
 	private void prevPage() {
+
+		nextBtt.setCaption("Siguiente");
 		
 		if(currentPageIndex > 0)
 			navigatePrev();
-
-			nextBtt.setCaption("Siguiente");
+		else 
+			clearAll();
+		
+		if(currentPageIndex == 0)
+			prevBtt.setCaption("Cancelar");
 		
 	}
 	
@@ -139,6 +145,18 @@ public class CampaniaPanel extends Panel implements View{
 		n.show(Page.getCurrent());
 		
 		getUI().getNavigator().navigateTo("");
+	}
+	
+	private void clearAll(){
+		pages.forEach((k,v) -> v.clear());
+		currentPageIndex = 0;
+		
+		Notification n = new Notification("Creacion de campaña cancelada");
+		n.setPosition(Position.TOP_CENTER);
+		n.show(Page.getCurrent());
+		
+		getUI().getNavigator().navigateTo("");
+		
 	}
 
 	private void initPages() {

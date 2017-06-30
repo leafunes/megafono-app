@@ -19,7 +19,7 @@ import view.ViewValidator;
 
 public class CampaniaEditDuration extends GridLayout implements CampaniaEditor{
 	
-	public static final String NAME = "CampEdirDuracion";
+	public static final String NAME = "CampEditDuracion";
 	
 	private ViewValidator validator;
 	
@@ -68,7 +68,8 @@ public class CampaniaEditDuration extends GridLayout implements CampaniaEditor{
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+		duracion.select(TipoDuracion.SEMANAL);
+		fechaInicio.setValue(new Date());
 		
 	}
 

@@ -30,10 +30,10 @@ public class CampaniaEditMensaje extends GridLayout implements CampaniaEditor{
 	
 	private TextArea mensajeTxt;
 	private Upload upload;
+	private Embedded image;
 	private FormLayout mainLayout;
 	
 	private Campania currentCampania;
-	private MensajeCampania mensajeCampania;
 	private final String UploadPath = "upload/";
 	private String filePath = "";
 	private String fileThumPath = "";
@@ -48,7 +48,7 @@ public class CampaniaEditMensaje extends GridLayout implements CampaniaEditor{
 		mainLayout = new FormLayout();
 		campaniaService = CampaniaService.getService();
 		
-		Embedded image = new Embedded("Imagen del mensaje: ");
+		image = new Embedded("Imagen del mensaje: ");
 		mensajeTxt = new TextArea("Texto del mensaje:");
 		
 		upload = new Upload();
@@ -101,7 +101,11 @@ public class CampaniaEditMensaje extends GridLayout implements CampaniaEditor{
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+		image.setSource(null);
+		mensajeTxt.setValue("");
+		
+		if(filePath != "") new File(filePath).delete();
+		if(fileThumPath != "") new File(fileThumPath).delete();
 		
 	}
 
