@@ -30,6 +30,7 @@ public class AccionPublicitariaService {
 	
 	public void saveAccion(AccionPublicitaria a){
 		daoAccion.save(a);
+		
 	}
 	
 	public List<AccionPublicitaria> getAllActionsOf(Tag t){
