@@ -3,12 +3,16 @@ package data;
 import java.time.Instant;
 
 import org.joda.time.Period;
+import org.joda.time.format.ISOPeriodFormat;
+import org.joda.time.format.PeriodFormat;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 
 public class AccionPublicitaria {
 	
 	private TipoAccionPublicitaria tipo;
 	//FIXME: ver si no hay que cambiar a milis por el tema de neodatis vs jodaTime
-	private Period periodicidad;
+	private String periodicidad;
 	private Instant ultimaEjecucion;
 	
 	private String destinatario;
@@ -28,11 +32,11 @@ public class AccionPublicitaria {
 	}
 
 	public Period getPeriodicidad() {
-		return periodicidad;
+		return Period.parse(periodicidad, ISOPeriodFormat.standard());
 	}
 
 	public void setPeriodicidad(Period periodicidad) {
-		this.periodicidad = periodicidad;
+		this.periodicidad = periodicidad.toString(ISOPeriodFormat.standard());
 	}
 
 	public Tag getTag() {

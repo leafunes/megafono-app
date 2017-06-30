@@ -40,7 +40,14 @@ public class AccionPublicitariaService {
 	}
 	
 	List<AccionPublicitaria> getAllActionsOf(Campania c){
-		return daoAccion.getAllActionsOf(c);
+		
+		List<AccionPublicitaria> toRet = new ArrayList<>();
+		
+		c.getTags().forEach(t -> toRet.addAll(getAllActionsOf(t)));
+		
+		toRet.addAll(daoAccion.getAllActionsOf(c));
+		
+		return toRet;
 	}
 	
 	public List<AccionPublicitaria> getAllActionsOf(Tag t){

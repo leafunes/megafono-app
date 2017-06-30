@@ -8,6 +8,8 @@ import org.neodatis.odb.ODBFactory;
 import org.neodatis.odb.ODBServer;
 import org.neodatis.odb.OdbConfiguration;
 
+import services.ScheduleService;
+
 /**
  * Application Lifecycle Listener implementation class NeodatisServerContentListener
  *
@@ -36,6 +38,8 @@ public class NeodatisServerContentListener implements ServletContextListener {
 				e.printStackTrace();
 			}
          }
+         
+         ScheduleService.getService().stop();
     }
 
 	/**
@@ -52,6 +56,7 @@ public class NeodatisServerContentListener implements ServletContextListener {
     		OdbConfiguration.setReconnectObjectsToSession(true);
     		
     		HardcodedInfo.init();
+    		ScheduleService.getService();
     		
     		isOk = true;
     		

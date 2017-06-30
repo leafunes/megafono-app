@@ -113,7 +113,7 @@ public class CampaniaEditMensaje extends GridLayout implements CampaniaEditor{
 	public void commit() {
 		
 		campaniaService.setMensaje(currentCampania, mensajeTxt.getValue(), filePath, fileThumPath);
-		
+
 	}
 
 	@Override

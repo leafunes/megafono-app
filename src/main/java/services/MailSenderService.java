@@ -14,8 +14,21 @@ import data.Mail;
 
 
 public class MailSenderService {
+	
+	private static MailSenderService singleton;
+	
 	private final String host = "smtp.gmail.com";
 	private final String port = "587";
+	
+	public static MailSenderService getCurrent(){
+		if(singleton == null)
+			singleton = new MailSenderService();
+		return singleton;
+	}
+	
+	private MailSenderService() {
+		
+	}
 	
 	public void send(Mail email){
 		String username = "megafono.app@gmail.com";

@@ -3,10 +3,14 @@ package services;
 import java.io.File;
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
+
 import daos.iface.DAO;
 import daos.iface.DAOCampania;
 import daos.impl.DAOCampaniaNeodatis;
 import daos.impl.DAONeodatis;
+import data.AccionPublicitaria;
 import data.Campania;
 import data.MensajeCampania;
 import data.Usuario;
@@ -54,6 +58,36 @@ public class CampaniaService {
 		
 		MensajeCampania mensaje = new MensajeCampania(txt, img, imgThumb);
 		c.setMensaje(mensaje);
+		
+	}
+
+	public DateTime getEndOf(Campania camp) {
+		
+		DateTime toRet = null;
+		
+		switch (camp.getDuracion()) {
+		case SEMANAL:
+			toRet = camp.getInicio().plus(Duration.standardDays(7));
+			break;
+		
+		case MENSUAL:
+			toRet = camp.getInicio().plus(Duration.standardDays(30));
+			break;
+			
+		case BIMENSUAL:
+			toRet = camp.getInicio().plus(Duration.standardDays(60));
+			break;
+			
+		case SEMESTRAL:
+			toRet = camp.getInicio().plus(Duration.standardDays(180));
+			break;
+
+		default:
+			break;
+		}
+			
+			
+		return toRet;
 		
 	}
 

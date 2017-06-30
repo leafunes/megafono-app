@@ -3,8 +3,12 @@ package services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.quartz.Job;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SimpleScheduleBuilder;
@@ -14,77 +18,92 @@ import org.quartz.impl.StdSchedulerFactory;
 
 import data.AccionPublicitaria;
 import data.Campania;
-import misc.MailsWaitingForSending;
+import data.Mail;
+import data.MensajeCampania;
+import data.TipoAccionPublicitaria;
+
+import org.quartz.SimpleTrigger;
+import static org.quartz.JobBuilder.newJob;
+import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
+import static org.quartz.TriggerBuilder.newTrigger;
 
 
 public class ScheduleService {
-	private List<Process> procesos;
-	private AccionPublicitariaService apService;
-	private Scheduler sch;
-	Campania c;
 	
-	public ScheduleService(Campania c) {
-		procesos = new ArrayList<>();
-		apService = AccionPublicitariaService.getService();
-		this.c = c;
-
+	private static ScheduleService singleton;
+	
+	private Scheduler scheduler;
+	
+	private CampaniaService campService;
+	private AccionPublicitariaService accionService;
+	private long id = 0;
+	
+	public static ScheduleService getService(){
+		if(singleton == null)
+			singleton = new ScheduleService();
+		return singleton;
+	}
+	
+	public ScheduleService() {
 		try {
-			sch = StdSchedulerFactory.getDefaultScheduler();
-			sch.start();
-		}catch (SchedulerException e) {
+			scheduler = StdSchedulerFactory.getDefaultScheduler();
+			scheduler.start();
+			
+			campService = CampaniaService.getService();
+			accionService = AccionPublicitariaService.getService();
+		} catch (SchedulerException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public void execute(){
-			List<AccionPublicitaria> aps = apService.getAllActionsOf(c);
-			aps.forEach(r -> procesos.add(new Process(r, sch)));
-			procesos.forEach(p -> p.configure());
 		
 	}
-
-
 	
-	private static class Process{
-		private AccionPublicitaria ap;
-		private JobDetail job;
-		private Trigger trigger;
-		private Scheduler sch;
+	public void addAcciones(Campania camp, List<AccionPublicitaria> acciones){
 		
-		public Process(AccionPublicitaria ap, Scheduler sch) {
-			this.ap = ap;
-			this.job = createJob();
-			this.trigger = createTrigger();
-			this.sch = sch;
-		}
-
-		public void configure(){
+		DateTime end = campService.getEndOf(camp);
+		for(AccionPublicitaria a : acciones)if(a.getTipo() == TipoAccionPublicitaria.MAIL){
+			
+			JobDetail job = newJob(MailJob.class)
+				      .withIdentity("mail" + id, "g1")
+				      .usingJobData("destinatario",a.getDestinatario())
+				      .usingJobData("asunto", "Publicidad By Megafono")
+				      .usingJobData("mensaje", camp.getMensaje().getMensaje())
+				      .build();
+			  
+			Trigger trigger = TriggerBuilder.newTrigger()
+				      .withIdentity("trigger" + id, "g1")
+				      .startAt(camp.getInicio().toDate())
+				      .withSchedule(simpleSchedule()
+				          .withIntervalInMilliseconds(a.getPeriodicidad().toStandardDuration().getMillis())
+				          .repeatForever())
+				      .endAt(end.toDate())
+				      .build();
+			
 			try {
-				sch.scheduleJob(job, trigger);
+				scheduler.scheduleJob(job, trigger);
 			} catch (SchedulerException e) {
 				e.printStackTrace();
 			}
+			
+			
+			id++;
 		}
 		
-		private Trigger createTrigger() {
-			return TriggerBuilder.newTrigger()
-					.withIdentity("Trigger: " + ap.hashCode())
-					.startNow()
-					.withSchedule(SimpleScheduleBuilder.simpleSchedule()
-							.withIntervalInMinutes(ap.getPeriodicidad().getMinutes())
-							.repeatForever()
-							)
-					.build();
+	}
+	
+	public void stop(){
+		try {
+			scheduler.shutdown();
+		} catch (SchedulerException e) {
+			e.printStackTrace();
 		}
+	}
 
-		private JobDetail createJob() {
-			return JobBuilder.newJob(MailsWaitingForSending.class)
-					.withIdentity(ap.hashCode() + "")
-					.usingJobData("to", ap.getDestinatario())
-					.usingJobData("subject", ap.getTag().getNombre())
-					.usingJobData("body",ap.getCamp().getDescripcion())
-					.build();
-		}
+	public void setScheduleFor(Campania campania) {
+
+		List<AccionPublicitaria> acciones = accionService.getAllActionsOf(campania);
+		
+		addAcciones(campania, acciones);
+		
 	}
 
 	

@@ -40,7 +40,7 @@ public class DAOAccionPublicitariaNeodatis extends DAONeodatis<AccionPublicitari
 	@Override
 	public List<AccionPublicitaria> getAllActionsOf(Campania c) {
 		IQuery query = new CriteriaQuery(AccionPublicitaria.class, 
-				Where.equal("campania.nombre", c.getNombre()));
+				Where.equal("camp.nombre", c.getNombre()));
 
 		List<AccionPublicitaria> toRet = new ArrayList<>();
 		

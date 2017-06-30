@@ -21,10 +21,12 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
+import data.AccionPublicitaria;
 import data.Campania;
 import misc.MessageBox;
 import misc.Procedure;
 import services.CampaniaService;
+import services.ScheduleService;
 
 public class CampaniaPanel extends Panel implements View{
 
@@ -41,6 +43,7 @@ public class CampaniaPanel extends Panel implements View{
 	
 	private int currentPageIndex;
 	private MessageBox msgBox = MessageBox.getMessageBox();
+	private ScheduleService schService = ScheduleService.getService();
 	private CampaniaService campaniaService;
 	
 	public CampaniaPanel() {
@@ -138,7 +141,12 @@ public class CampaniaPanel extends Panel implements View{
 		pages.forEach((k, v) -> v.clear());
 		currentPageIndex = 0;
 		
+		String nameOfPrevView = pagesOrder.get(currentPageIndex);
+		navigable.setContent(pages.get(nameOfPrevView));
+		
 		campaniaService.saveCampania(currentCampania);
+		
+		schService.setScheduleFor(currentCampania);
 		
 		Notification n = new Notification("Camapña creada", ValoTheme.NOTIFICATION_SUCCESS);
 		n.setPosition(Position.TOP_CENTER);
@@ -150,6 +158,9 @@ public class CampaniaPanel extends Panel implements View{
 	private void clearAll(){
 		pages.forEach((k,v) -> v.clear());
 		currentPageIndex = 0;
+		
+		String nameOfPrevView = pagesOrder.get(currentPageIndex);
+		navigable.setContent(pages.get(nameOfPrevView));
 		
 		Notification n = new Notification("Creacion de campaña cancelada");
 		n.setPosition(Position.TOP_CENTER);

@@ -31,6 +31,7 @@ import data.UnidadTiempo;
 import misc.MessageBox;
 import services.AccionPublicitariaService;
 import services.CampaniaService;
+import services.ScheduleService;
 import view.AccionField;
 import view.ViewValidator;
 
@@ -43,6 +44,7 @@ public class CampaniaEditAciones extends VerticalLayout implements CampaniaEdito
 	private AccionField accionField;
 	
 	private List<AccionPublicitaria> accionesPublicitarias;
+	private Campania currentCampania;
 	
 	private AccionPublicitariaService accionService = AccionPublicitariaService.getService();
 	private MessageBox messageBox;
@@ -86,7 +88,8 @@ public class CampaniaEditAciones extends VerticalLayout implements CampaniaEdito
 	
 	@Override
 	public void editCampania(Campania c) {
-
+		
+		currentCampania = c;
 		accionesPublicitarias.clear();
 		accionesElegidas.getContainerDataSource().removeAllItems();
 		
